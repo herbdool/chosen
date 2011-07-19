@@ -11,18 +11,9 @@
  * Implements hook_init().
  */
 function chosen_init() {
-  $path = libraries_get_path('chosen');
   if ($selectors = variable_get('chosen_usage_settings_custom_selectors', FALSE)) {
-    //add chosen css
-    drupal_add_css($path . '/chosen/chosen.css');
-    
-    //add chosen js - minified is preferred
-    if (file_exists($path . '/chosen/chosen.jquery.min.js')) {
-      drupal_add_js($path . '/chosen/chosen.jquery.min.js');
-    }
-    else {
-      drupal_add_js($path . '/chosen/chosen.jquery.js');
-    }
+    drupal_add_css(libraries_get_path('chosen') . '/chosen/chosen.css');
+    drupal_add_js(chosen_js_path());
     drupal_add_js(array('chosen' => array('selectors' => variable_get('chosen_usage_settings_custom_selectors', ''))), 'setting');
     drupal_add_js(drupal_get_path('module', 'chosen') . '/chosen.js');
   }
@@ -44,4 +35,24 @@ function chosen_menu() {
   );
   
   return $items;
+}
+
+/**
+ * Returns the path to the Chosen JavaScript file.
+ *
+ * @return mixed
+ *   The path to the JavaScript file or FALSE if no file could be found.
+ */
+function chosen_js_path() {
+  $path = libraries_get_path('chosen');
+
+  // Use the minified file if it exists to preserve bandwidth.
+  if (file_exists($path . '/chosen/chosen.jquery.min.js')) {
+    return $path . '/chosen/chosen.jquery.min.js';
+  }
+  elseif (file_exists($path . '/chosen/chosen.jquery.js')) {
+    return $path . '/chosen/chosen.jquery.js';
+  }
+
+  return FALSE;
 }

@@ -8,14 +8,12 @@
  * Implements hook_requirements().
  */
 function chosen_requirements($phase) {
-  $requirements = array();
-  if ($phase == 'install' && !file_exists('sites/all/libraries/chosen/chosen.jquery.min.js')) {
-    $requirements['chosen_js'] = array(
-      'title' => t('Chosen JavaScript file'),
-      'description' => t('Place <code>chosen.jquery.min.js</code> in <em>sites/all/libraries/chosen</em>.'),
-      'severity' => REQUIREMENT_ERROR,
-    );
-  }
+  $requirements['chosen_js'] = array(
+    'title' => t('Chosen JavaScript file'),
+    'value' => chosen_js_path() ? t('Available') : t('Unavailable'),
+    'description' => !chosen_js_path() ? t('Place <code>chosen.jquery.min.js</code> or <code>chosen.jquery.js</code> in <em>sites/all/libraries/chosen/chosen</em>.') : NULL,
+    'severity' => chosen_js_path() ? REQUIREMENT_OK : REQUIREMENT_ERROR,
+  );
 
   return $requirements;
 }
