@@ -9,23 +9,23 @@
 function chosen_admin_settings() {
   $form = array();
   
-  $form['access_links_display'] = array(
+  $form['chosen_usage_settings'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Display Settings'),
+    '#title' => t('Usage'),
   );
   
-  $form['access_links_display']['access_links_show_in_node_body'] = array(
+  $form['chosen_usage_settings']['chosen_usage_settings_use_in_admin'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Show Access links in content'),
-    '#description' => t('The links will be appended to the content body.'),
-    '#default_value' => variable_get('access_links_show_in_node_body', 0),
+    '#title' => t('Enable Chosen in Administration interface'),
+    '#description' => t('Check if you want to enable Chosen in the admin ui.'),
+    '#default_value' => variable_get('chosen_usage_settings_use_in_admin', 0),
   );
   
-  $form['access_links_display']['access_links_show_in_block'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Show Access links in a block'),
-    '#description' => t('The links will be shown in a block. You need to enable the block !here.', array('!here' => l(t('here'), 'admin/structure/block'))),
-    '#default_value' => variable_get('access_links_show_in_block', 0),
+  $form['chosen_usage_settings']['chosen_usage_settings_custom_selectors'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Enable Chosen on the following elements'),
+    '#description' => t('jQuery selectos to use chosen on. eg. .chosen-select or #chosen-select or select to use on all select element.'),
+    '#default_value' => variable_get('chosen_usage_settings_custom_selectors', ''),
   );
   
   return system_settings_form($form);

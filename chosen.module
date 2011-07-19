@@ -13,9 +13,21 @@ define('CHOSEN_MODULE_PATH', drupal_get_path('module', 'chosen'));
  */
 function chosen_init() {
   $path = libraries_get_path('chosen');
-  drupal_add_js($path . '/chosen.jquery.min.js');
-  drupal_add_css($path . '/chosen.css');
-  drupal_add_js(CHOSEN_MODULE_PATH . '/chosen.js');
+  $enabled = FALSE;
+  $selectors = variable_get('chosen_usage_settings_custom_selectors', '');
+  if (arg(0) != 'admin' && !empty($selectors)) {
+    $enabled = TRUE;
+  } else if (variable_get('chosen_usage_settings_use_in_admin', 0)) {
+    $enabled = TRUE;
+  }
+  
+  if ($enabled) {
+    drupal_add_css($path . '/chosen.css');
+    
+    drupal_add_js($path . '/chosen.jquery.min.js');
+    drupal_add_js(array('chosen' => array('selectors' => variable_get('chosen_usage_settings_custom_selectors', ''))), 'setting');
+    drupal_add_js(CHOSEN_MODULE_PATH . '/chosen.js');
+  }
 }
 
 /**
@@ -30,6 +42,7 @@ function chosen_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('chosen_admin_settings'),
     'access arguments' => array('Administer Chosen'),
+    'file' => 'chosen.admin.inc',
   );
   
   return $items;
