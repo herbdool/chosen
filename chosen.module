@@ -1,5 +1,5 @@
 <?php
-//$Id$
+// $Id$
 
 /**
  * @file
@@ -17,7 +17,8 @@ function chosen_init() {
   $selectors = variable_get('chosen_usage_settings_custom_selectors', '');
   if (arg(0) != 'admin' && !empty($selectors)) {
     $enabled = TRUE;
-  } else if (variable_get('chosen_usage_settings_use_in_admin', 0)) {
+  }
+  elseif (variable_get('chosen_usage_settings_use_in_admin', 0)) {
     $enabled = TRUE;
   }
   
