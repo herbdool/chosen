@@ -1,0 +1,21 @@
+<?php
+/**
+ * @file
+ * Installation and uninstallation functions.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function chosen_requirements($phase) {
+  $requirements = array();
+  if ($phase == 'install' && !file_exists('sites/all/libraries/chosen/chosen.jquery.min.js')) {
+    $requirements['chosen_js'] = array(
+      'title' => t('Chosen JavaScript file'),
+      'description' => t('Place <code>chosen.jquery.min.js</code> in <em>sites/all/libraries/chosen</em>.'),
+      'severity' => REQUIREMENT_ERROR,
+    );
+  }
+
+  return $requirements;
+}
