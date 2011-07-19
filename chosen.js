@@ -1,5 +1,7 @@
-Drupal.behaviors.chosen = {
-  attach: function(context, settings) {
-    jQuery(Drupal.settings.chosen.selectors).chosen(); 
+(function($) {
+  Drupal.behaviors.chosen = {
+    attach: function(context) {
+      $(Drupal.settings.chosen.selectors).chosen(); 
+    }
   }
-}
+})(jQuery);
