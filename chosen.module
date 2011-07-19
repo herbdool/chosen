@@ -34,7 +34,7 @@ function chosen_menu() {
     'description' => 'Configuration for Chosen plugin',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('chosen_admin_settings'),
-    'access arguments' => array('Administer Chosen'),
+    'access arguments' => array('administer site configuration'),
     'file' => 'chosen.admin.inc',
   );
   
