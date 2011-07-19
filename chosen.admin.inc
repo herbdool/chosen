@@ -2,9 +2,12 @@
 
 /**
  * @file
- * Administration for Access Links
+ * Chosen administration pages.
  */
 
+/**
+ * General configuration form.
+ */
 function chosen_admin_settings() {
   $form = array();
   

@@ -2,7 +2,9 @@
 
 /**
  * @file
- * Integrates the <a href="http://harvesthq.github.com/chosen/">Chosen</a> plugin to Drupal
+ * General functions and hook implementations.
+ *
+ * @see http://harvesthq.github.com/chosen/
  */
 
 define('CHOSEN_MODULE_PATH', drupal_get_path('module', 'chosen'));
@@ -38,7 +40,7 @@ function chosen_init() {
 }
 
 /**
- * Implementation of hook_menu()
+ * Implement hook_menu()
  */
 function chosen_menu() {
   $items = array();
