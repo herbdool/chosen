@@ -12,16 +12,7 @@
  */
 function chosen_init() {
   $path = libraries_get_path('chosen');
-  $enabled = FALSE;
-  $selectors = variable_get('chosen_usage_settings_custom_selectors', '');
-  if (arg(0) != 'admin' && !empty($selectors)) {
-    $enabled = TRUE;
-  }
-  elseif (variable_get('chosen_usage_settings_use_in_admin', 0)) {
-    $enabled = TRUE;
-  }
-  
-  if ($enabled) {
+  if ($selectors = variable_get('chosen_usage_settings_custom_selectors', FALSE)) {
     //add chosen css
     drupal_add_css($path . '/chosen/chosen.css');
     

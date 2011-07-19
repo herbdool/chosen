@@ -9,12 +9,6 @@
  * General configuration form.
  */
 function chosen_admin_settings() {
-  $form['chosen_usage_settings_use_in_admin'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Use Chosen for administrative pages'),
-    '#default_value' => variable_get('chosen_usage_settings_use_in_admin', FALSE),
-  );
-  
   $form['chosen_usage_settings_custom_selectors'] = array(
     '#type' => 'textfield',
     '#title' => t('Enable Chosen on the following elements'),
