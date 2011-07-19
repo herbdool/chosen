@@ -17,6 +17,7 @@ function chosen_init() {
     drupal_add_js(array(
       'chosen' => array(
         'selector' => variable_get('chosen_jquery_selector', 'select'),
+        'minimum' => variable_get('chosen_minimum', 20),
       ),
     ), 'setting');
     drupal_add_js(drupal_get_path('module', 'chosen') . '/chosen.js');
