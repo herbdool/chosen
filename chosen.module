@@ -1,0 +1,14 @@
+<?php
+//$Id$
+
+/**
+ * @file
+ * Integrates the <a href="http://harvesthq.github.com/chosen/">Chosen</a> plugin to Drupal
+ */
+
+/**
+ * Implements hook_init().
+ */
+function chosen_init() {
+  dsm(libraries_get_path('chosen'));
+}
