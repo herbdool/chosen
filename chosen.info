@@ -2,5 +2,7 @@
 name = Chosen
 description = Integrates the <a href="http://harvesthq.github.com/chosen/">Chosen</a> plugin to Drupal
 package = User interface
+configure = admin/config/user-interface/chosen
 dependencies[] = libraries
 core = 7.x
+

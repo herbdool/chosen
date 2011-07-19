@@ -23,14 +23,14 @@ function chosen_init() {
   
   if ($enabled) {
     //add chosen css
-    drupal_add_css($path . '/chosen.css');
+    drupal_add_css($path . '/chosen/chosen.css');
     
     //add chosen js - minified is preferred
-    if (file_exists($path . '/chosen.jquery.min.js')) {
-      drupal_add_js($path . '/chosen.jquery.min.js');
+    if (file_exists($path . '/chosen/chosen.jquery.min.js')) {
+      drupal_add_js($path . '/chosen/chosen.jquery.min.js');
     }
     else {
-      drupal_add_js($path . '/chosen.jquery.js');
+      drupal_add_js($path . '/chosen/chosen.jquery.js');
     }
     drupal_add_js(array('chosen' => array('selectors' => variable_get('chosen_usage_settings_custom_selectors', ''))), 'setting');
     drupal_add_js(CHOSEN_MODULE_PATH . '/chosen.js');
@@ -43,7 +43,7 @@ function chosen_init() {
 function chosen_menu() {
   $items = array();
   
-  $items['admin/config/content/chosen'] = array(
+  $items['admin/config/user-interface/chosen'] = array(
     'title' => 'Chosen',
     'description' => 'Configuration for Chosen plugin',
     'page callback' => 'drupal_get_form',
