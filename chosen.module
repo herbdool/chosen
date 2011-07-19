@@ -17,3 +17,20 @@ function chosen_init() {
   drupal_add_css($path . '/chosen.css');
   drupal_add_js(CHOSEN_MODULE_PATH . '/chosen.js');
 }
+
+/**
+ * Implementation of hook_menu()
+ */
+function chosen_menu() {
+  $items = array();
+  
+  $items['admin/config/content/chosen'] = array(
+    'title' => 'Chosen',
+    'description' => 'Configuration for Chosen plugin',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('chosen_admin_settings'),
+    'access arguments' => array('Administer Chosen'),
+  );
+  
+  return $items;
+}
