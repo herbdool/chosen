@@ -8,7 +8,7 @@
  * Implements hook_requirements().
  */
 function chosen_requirements($phase) {
-  module_load_include('module', 'chosen');
+  module_load_include('module', 'chosen', 'chosen');
 
   $requirements['chosen_js'] = array(
     'title' => t('Chosen JavaScript file'),
