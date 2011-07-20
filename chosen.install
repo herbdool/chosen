@@ -8,6 +8,8 @@
  * Implements hook_requirements().
  */
 function chosen_requirements($phase) {
+  module_load_include('module', 'chosen');
+
   $requirements['chosen_js'] = array(
     'title' => t('Chosen JavaScript file'),
     'value' => chosen_js_path() ? t('Available') : t('Unavailable'),
