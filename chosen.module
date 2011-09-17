@@ -11,7 +11,7 @@
  * Implements hook_init().
  */
 function chosen_init() {
-  if ($selectors = variable_get('chosen_jquery_selector', FALSE)) {
+  //if ($selectors = variable_get('chosen_jquery_selector', FALSE)) {
     drupal_add_css(libraries_get_path('chosen') . '/chosen/chosen.css');
     drupal_add_js(chosen_js_path());
     drupal_add_js(array(
@@ -21,7 +21,7 @@ function chosen_init() {
       ),
     ), 'setting');
     drupal_add_js(drupal_get_path('module', 'chosen') . '/chosen.js');
-  }
+  //}
 }
 
 /**
@@ -40,6 +40,62 @@ function chosen_menu() {
   );
   
   return $items;
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function chosen_field_widget_info() {
+  return array(
+    'chosen_field' => array(
+      'label' => 'Chosen',
+      'field types' => array('list_integer', 'list_float', 'list_text', 'list_boolean'),
+      'multiple values' => FIELD_BEHAVIOR_DEFAULT,
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function chosen_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  $type = $instance['widget']['type'];
+  $options = $field['settings']['allowed_values'];
+  
+  switch ($type) {
+    case 'chosen_field' :
+      $element += array(
+        '#type' => 'select', 
+        '#default_value' => $instance['default_value'],
+        '#options' => $options,
+        '#attributes' => array(
+          'class' => array('chosen-widget')
+        ),
+      );
+      break;
+  }
+  
+  $element += array(
+    '#type' => $instance['widget']['type'],
+    '#default_value' => isset($items[$delta]) ? $items[$delta] : '',
+  );
+  
+  return $element;
+}
+
+/**
+ * Implements hook_field_instance_settings_form().
+ */
+function chosen_field_instance_settings_form($field, $instance) {
+  $form = array();
+  
+  $form['chosen_no_result'] = array(
+    '#type' => 'textfield',
+    '#title' => t('No results text'),
+    '#default_value' => isset($instance['settings']['chosen_no_result']) ? $instance['settings']['chosen_no_result'] : '',
+  );
+  
+  return $form;
 }
 
 /**
