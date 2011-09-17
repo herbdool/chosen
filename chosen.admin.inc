@@ -9,6 +9,8 @@
  * General configuration form.
  */
 function chosen_admin_settings() {
+  $form = array();
+  
   $form['chosen_minimum'] = array(
     '#type' => 'select',
     '#title' => t('Minimum number of options'),
@@ -22,6 +24,7 @@ function chosen_admin_settings() {
     ),
     '#default_value' => variable_get('chosen_minimum', 20),
   );
+  
   $form['chosen_jquery_selector'] = array(
     '#type' => 'textarea',
     '#title' => t('Apply Chosen to the following elements'),

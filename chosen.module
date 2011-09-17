@@ -18,6 +18,7 @@ function chosen_init() {
       'chosen' => array(
         'selector' => variable_get('chosen_jquery_selector', 'select'),
         'minimum' => variable_get('chosen_minimum', 20),
+        'minimum_width' => variable_get('chosen_minimum_width', 200),
       ),
     ), 'setting');
     drupal_add_js(drupal_get_path('module', 'chosen') . '/chosen.js');
@@ -69,33 +70,13 @@ function chosen_field_widget_form(&$form, &$form_state, $field, $instance, $lang
         '#default_value' => $instance['default_value'],
         '#options' => $options,
         '#attributes' => array(
-          'class' => array('chosen-widget')
+          'class' => array('chosen-widget'),
         ),
       );
       break;
   }
   
-  $element += array(
-    '#type' => $instance['widget']['type'],
-    '#default_value' => isset($items[$delta]) ? $items[$delta] : '',
-  );
-  
   return $element;
-}
-
-/**
- * Implements hook_field_instance_settings_form().
- */
-function chosen_field_instance_settings_form($field, $instance) {
-  $form = array();
-  
-  $form['chosen_no_result'] = array(
-    '#type' => 'textfield',
-    '#title' => t('No results text'),
-    '#default_value' => isset($instance['settings']['chosen_no_result']) ? $instance['settings']['chosen_no_result'] : '',
-  );
-  
-  return $form;
 }
 
 /**
