@@ -20,7 +20,7 @@ function chosen_init() {
   drupal_add_js(chosen_js_path());
   drupal_add_js(array(
     'chosen' => array(
-      'selector' => variable_get('chosen_jquery_selector', 'select'),
+      'selector' => variable_get('chosen_jquery_selector', 'select:visible'),
       'minimum' => variable_get('chosen_minimum', 20),
       'minimum_width' => variable_get('chosen_minimum_width', 200),
     ),
@@ -33,7 +33,7 @@ function chosen_init() {
  */
 function chosen_menu() {
   $items = array();
-  
+
   $items['admin/config/user-interface/chosen'] = array(
     'title' => 'Chosen',
     'description' => 'Configuration for Chosen plugin',
@@ -42,7 +42,7 @@ function chosen_menu() {
     'access arguments' => array('administer site configuration'),
     'file' => 'chosen.admin.inc',
   );
-  
+
   return $items;
 }
 
@@ -67,7 +67,7 @@ function chosen_field_widget_info_alter(&$info) {
   $settings = array(
     'apply_chosen' => 0,
   );
-  
+
   if (isset($info[CHOSEN_WIDGET]['settings'])) {
     $info[CHOSEN_WIDGET]['settings'] += $settings;
   }
@@ -76,7 +76,7 @@ function chosen_field_widget_info_alter(&$info) {
 function chosen_field_widget_settings_form($field, $instance) {
   $widget = $instance['widget'];
   $settings = $widget['settings'];
-  
+
   $form['chosen'] = array(
     '#type' => 'fieldset',
     '#title' => t('Chosen'),
@@ -84,13 +84,13 @@ function chosen_field_widget_settings_form($field, $instance) {
     '#collapsible' => TRUE,
     '#parents' => array('instance', 'widget', 'settings'),
   );
-  
+
   $form['chosen']['apply_chosen'] = array(
     '#type' => 'checkbox',
     '#title' => t('Apply Chosen on this field'),
     '#default_value' => $settings['apply_chosen'],
   );
-  
+
   return $form;
 }
 
