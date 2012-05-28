@@ -52,7 +52,7 @@ function chosen_admin_settings() {
     '#title' => t('Search also in the middle of words'),
     '#default_value' => variable_get('chosen_search_contains', FALSE),
     '#description' => t('Per default chosen searches only at beginning of words. Enable this option will also find results in the middle of words.
-      Example: Search for <i>land</i> will also find <code>Switzer<i>land</i></code>.'),
+      Example: Search for <em>land</em> will also find <code>Switzer<strong>land</strong></code>.'),
   );
   
   return system_settings_form($form);
