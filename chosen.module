@@ -23,6 +23,7 @@ function chosen_init() {
       'selector' => variable_get('chosen_jquery_selector', 'select:visible'),
       'minimum' => variable_get('chosen_minimum', 20),
       'minimum_width' => variable_get('chosen_minimum_width', 200),
+      'search_contains' => (variable_get('chosen_search_contains', FALSE)) ? TRUE : FALSE,
     ),
   ), 'setting');
   drupal_add_js(drupal_get_path('module', 'chosen') . '/chosen.js');
