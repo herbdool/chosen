@@ -3,5 +3,5 @@
  * Drupal-specific CSS fixes for the Chosen module
  */
 .chzn-container {
-  display: block !important;
+  display: table !important;
 }
