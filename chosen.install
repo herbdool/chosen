@@ -14,7 +14,7 @@ function chosen_requirements($phase) {
   $requirements['chosen_js'] = array(
    'title' => t('Chosen JavaScript file'),
    'value' => chosen_js_path() ? t('Available') : t('Unavailable'),
-   'description' => !chosen_js_path() ? t('Place <code>chosen.jquery.min.js</code> or <code>chosen.jquery.js</code> in <em>sites/all/libraries/chosen/chosen</em>.') : NULL,
+   'description' => !chosen_js_path() ? t('Place <code>chosen.jquery.min.js</code> or <code>chosen.jquery.js</code> in <em>sites/all/libraries/chosen/chosen</em>. <strong>Chosen was not installed.</strong>') : NULL,
    'severity' => chosen_js_path() ? REQUIREMENT_OK : REQUIREMENT_ERROR,
   );
 
