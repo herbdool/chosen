@@ -52,11 +52,13 @@ function chosen_menu() {
  * Implements hook_form_alter().
  */
 function chosen_form_field_ui_field_edit_form_alter(&$form, $form_state) {
-  $type = $form['instance']['widget']['type']['#value'];
-  if ($type == CHOSEN_WIDGET) {
-    $field = $form['#field'];
-    $instance = field_info_instance($form['instance']['entity_type']['#value'], $form['instance']['field_name']['#value'], $form['instance']['bundle']['#value']);
-    $form['instance'] += chosen_field_widget_settings_form($field, $instance);
+  if (isset($form['instance']['widget']['type']['#value'])) {
+    $type = $form['instance']['widget']['type']['#value'];
+    if ($type == CHOSEN_WIDGET) {
+      $field = $form['#field'];
+      $instance = field_info_instance($form['instance']['entity_type']['#value'], $form['instance']['field_name']['#value'], $form['instance']['bundle']['#value']);
+      $form['instance'] += chosen_field_widget_settings_form($field, $instance);
+    }
   }
 }
 
