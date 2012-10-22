@@ -17,6 +17,7 @@ define('CHOSEN_WIDGET', 'options_select');
  */
 function chosen_init() {
   drupal_add_css(libraries_get_path('chosen') . '/chosen/chosen.css');
+  drupal_add_css(drupal_get_path('module', 'chosen') . '/css/chosen-drupal.css');
   drupal_add_js(chosen_js_path());
   drupal_add_js(array(
     'chosen' => array(
