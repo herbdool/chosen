@@ -26,5 +26,8 @@ function chosen_requirements($phase) {
  */
 function chosen_uninstall() {
   // Delete created variables.
+  variable_del('chosen_minimum');
+  variable_del('chosen_minimum_width');
+  variable_del('chosen_search_contains');
   variable_del('chosen_jquery_selector');
 }
