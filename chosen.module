@@ -105,7 +105,7 @@ function chosen_field_widget_form_alter(&$element, &$form_state, $context) {
   $type = $context['instance']['widget']['type'];
   if ($type == CHOSEN_WIDGET) {
     $settings = $context['instance']['widget']['settings'];
-    if ($settings['apply_chosen']) {
+    if (isset($settings['apply_chosen'])) {
       $element['#attributes']['class'][] = 'chosen-widget';
     }
   }
