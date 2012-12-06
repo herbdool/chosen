@@ -25,6 +25,9 @@ function chosen_init() {
       'minimum' => variable_get('chosen_minimum', 20),
       'minimum_width' => variable_get('chosen_minimum_width', 200),
       'search_contains' => (variable_get('chosen_search_contains', FALSE)) ? TRUE : FALSE,
+      'placeholder_text_multiple' => t(variable_get('chosen_placeholder_text_multiple', 'Choose some options')),
+      'placeholder_text_single' => t(variable_get('chosen_placeholder_text_single', 'Choose an option')),
+      'no_results_text' => t(variable_get('chosen_no_results_text', 'No results match')),
     ),
   ), 'setting');
   drupal_add_js(drupal_get_path('module', 'chosen') . '/chosen.js');
