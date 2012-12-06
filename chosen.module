@@ -31,7 +31,7 @@ function chosen_init() {
 }
 
 /**
- * Implement hook_menu()
+ * Implements hook_menu().
  */
 function chosen_menu() {
   $items = array();
@@ -77,6 +77,9 @@ function chosen_field_widget_info_alter(&$info) {
   }
 }
 
+/**
+ * Implements hook_field_widget_settings_form().
+ */
 function chosen_field_widget_settings_form($field, $instance) {
   $widget = $instance['widget'];
   $settings = $widget['settings'];
