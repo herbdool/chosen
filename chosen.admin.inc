@@ -8,9 +8,7 @@
 /**
  * General configuration form.
  */
-function chosen_admin_settings() {
-  $form = array();
-  
+function chosen_admin_settings($form, &$form_state) {
   $form['chosen_minimum'] = array(
     '#type' => 'select',
     '#title' => t('Minimum number of options'),
