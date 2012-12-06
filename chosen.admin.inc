@@ -21,7 +21,7 @@ function chosen_admin_settings($form, &$form_state) {
       25 =>  25,
     ),
     '#default_value' => variable_get('chosen_minimum', 20),
-    '#description' => t('The mininum number of options to apply Chosen. Example : choosing 10 will only apply Chosen if the number of options is greater or equal to 10.')
+    '#description' => t('The minimum number of options to apply Chosen. Example : choosing 10 will only apply Chosen if the number of options is greater or equal to 10.')
   );
   
   $form['chosen_minimum_width'] = array(
