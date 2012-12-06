@@ -6,7 +6,7 @@
  */
 
 /**
- * General configuration form.
+ * Returns with the general configuration form.
  */
 function chosen_admin_settings($form, &$form_state) {
   $form['chosen_minimum'] = array(
