@@ -52,6 +52,29 @@ function chosen_admin_settings($form, &$form_state) {
     '#description' => t('Per default chosen searches only at beginning of words. Enable this option will also find results in the middle of words.
       Example: Search for <em>land</em> will also find <code>Switzer<strong>land</strong></code>.'),
   );
-  
+
+  $form['strings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Chosen strings'),
+  );
+  $form['strings']['chosen_placeholder_text_multiple'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Placeholder text of multiple selects'),
+    '#required' => TRUE,
+    '#default_value' => variable_get('chosen_placeholder_text_multiple', 'Choose some options'),
+  );
+  $form['strings']['chosen_placeholder_text_single'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Placeholder text of single selects'),
+    '#required' => TRUE,
+    '#default_value' => variable_get('chosen_placeholder_text_single', 'Choose an option'),
+  );
+  $form['strings']['chosen_no_results_text'] = array(
+    '#type' => 'textfield',
+    '#title' => t('No results text'),
+    '#required' => TRUE,
+    '#default_value' => variable_get('chosen_no_results_text', 'No results match'),
+  );
+
   return system_settings_form($form);
 }
