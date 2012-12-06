@@ -22,7 +22,7 @@ function chosen_requirements($phase) {
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function chosen_uninstall() {
   // Delete created variables.
