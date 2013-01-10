@@ -30,7 +30,9 @@ function chosen_init() {
       'no_results_text' => t(variable_get('chosen_no_results_text', 'No results match')),
     ),
   ), 'setting');
-  drupal_add_js(drupal_get_path('module', 'chosen') . '/chosen.js');
+  drupal_add_js(drupal_get_path('module', 'chosen') . '/chosen.js',
+    array('type' => 'file', 'scope' => 'footer', 'weight' => JS_DEFAULT)
+  );
 }
 
 /**
