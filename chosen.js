@@ -21,10 +21,11 @@
 
       //enable Chosen for widgets
       $('.chosen-widget', context).each(function() {
-        $(this).css({
-          width : ($(this).width() < minWidth) ? minWidth : $(this).width()
-        }).chosen(options);
+        options = $.extend(options, {
+          width: (($(this).width() < minWidth) ? minWidth : $(this).width()) + 'px'
+        });
+        $(this).chosen(options);
       });
     }
-  }
+  };
 })(jQuery);
