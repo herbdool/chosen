@@ -10,7 +10,7 @@
 /**
  * Widget that Chosen can be applied to
  */
-define('CHOSEN_WIDGET', 'options_select');
+define('CHOSEN_WIDGETS', serialize(array('options_select', 'date_select')));
 
 /**
  * Implements hook_menu().
@@ -36,7 +36,7 @@ function chosen_menu() {
 function chosen_form_field_ui_field_edit_form_alter(&$form, $form_state) {
   if (isset($form['instance']['widget']['type']['#value'])) {
     $type = $form['instance']['widget']['type']['#value'];
-    if ($type == CHOSEN_WIDGET) {
+    if (in_array($type, unserialize(CHOSEN_WIDGETS))) {
       $field = $form['#field'];
       $instance = field_info_instance($form['instance']['entity_type']['#value'], $form['instance']['field_name']['#value'], $form['instance']['bundle']['#value']);
       $form['instance'] += chosen_field_widget_settings_form($field, $instance);
@@ -54,8 +54,10 @@ function chosen_field_widget_info_alter(&$info) {
     'apply_chosen' => 0,
   );
 
-  if (isset($info[CHOSEN_WIDGET]['settings'])) {
-    $info[CHOSEN_WIDGET]['settings'] += $settings;
+  foreach (unserialize(CHOSEN_WIDGETS) as $widget) {
+    if (isset($info[$widget]['settings'])) {
+      $info[$widget]['settings'] += $settings;
+    }
   }
 }
 
@@ -77,7 +79,7 @@ function chosen_field_widget_settings_form($field, $instance) {
   $form['chosen']['apply_chosen'] = array(
     '#type' => 'checkbox',
     '#title' => t('Apply Chosen on this field'),
-    '#default_value' => $settings['apply_chosen'],
+    '#default_value' => isset($settings['apply_chosen']) ? $settings['apply_chosen'] : FALSE,
   );
 
   return $form;
@@ -88,7 +90,7 @@ function chosen_field_widget_settings_form($field, $instance) {
  */
 function chosen_field_widget_form_alter(&$element, &$form_state, $context) {
   $type = $context['instance']['widget']['type'];
-  if ($type == CHOSEN_WIDGET) {
+  if (in_array($type, unserialize(CHOSEN_WIDGETS))) {
     $settings = $context['instance']['widget']['settings'];
     if (!empty($settings['apply_chosen'])) {
       $element['#attributes']['class'][] = 'chosen-widget';
@@ -151,4 +153,7 @@ function chosen_library() {
  */
 function chosen_element_info_alter(&$info) {
   $info['select']['#attached']['library'][] = array('chosen', 'drupal.chosen');
+  if(module_exists('date')) {
+    $info['date_combo']['#attached']['library'][] = array('chosen', 'drupal.chosen');
+  }
 }
