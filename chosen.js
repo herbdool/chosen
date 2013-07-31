@@ -12,11 +12,10 @@
       $(settings.chosen.selector, context)
         .not('#field-ui-field-overview-form select, #field-ui-display-overview-form select') //disable chosen on field ui
         .each(function() {
-        if ($(this).find('option').size() >= settings.chosen.minimum) {
-          $(this).css({
-            width : ($(this).width() < minWidth) ? minWidth : $(this).width()
-          }).chosen(options);
-        }
+        options = $.extend(options, {
+          width: (($(this).width() < minWidth) ? minWidth : $(this).width()) + 'px'
+        });
+        $(this).chosen(options);
       });
 
       //enable Chosen for widgets
