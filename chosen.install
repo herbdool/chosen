@@ -12,21 +12,21 @@ function chosen_requirements($phase) {
 
   if ($phase == 'runtime') {
     $t = get_t();
-    $library = libraries_detect('chosen');
+    $libraries = libraries_get_libraries();
 
-    if (empty($library['installed'])) {
+    if (empty($libraries['chosen'])) {
       $requirements['chosen_js'] = array(
         'title' => $t('Chosen JavaScript file'),
         'severity' => REQUIREMENT_ERROR,
         'description' => $t('You need to download the !chosen and extract the entire contents of the archive into the %path directory on your server.', array('!chosen' => l($t('Chosen JavaScript file'), $library['download url']), '%path' => 'sites/all/libraries')),
-        'value' => $library['error message'],
+        'value' => $t('Not Installed'),
       );
     }
     else {
       $requirements['chosen_js'] = array(
         'title' => $t('Chosen JavaScript file'),
         'severity' => REQUIREMENT_OK,
-        'value' => $library['version'],
+        'value' => $t('Installed'),
       );
     }
   }
