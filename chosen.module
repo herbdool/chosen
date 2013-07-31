@@ -13,28 +13,6 @@
 define('CHOSEN_WIDGET', 'options_select');
 
 /**
- * Implements hook_init().
- */
-function chosen_init() {
-  libraries_load('chosen');
-  drupal_add_css(drupal_get_path('module', 'chosen') . '/css/chosen-drupal.css');
-  drupal_add_js(array(
-    'chosen' => array(
-      'selector' => variable_get('chosen_jquery_selector', 'select:visible'),
-      'minimum' => variable_get('chosen_minimum', 20),
-      'minimum_width' => variable_get('chosen_minimum_width', 200),
-      'search_contains' => (variable_get('chosen_search_contains', FALSE)) ? TRUE : FALSE,
-      'placeholder_text_multiple' => t(variable_get('chosen_placeholder_text_multiple', 'Choose some options')),
-      'placeholder_text_single' => t(variable_get('chosen_placeholder_text_single', 'Choose an option')),
-      'no_results_text' => t(variable_get('chosen_no_results_text', 'No results match')),
-    ),
-  ), 'setting');
-  drupal_add_js(drupal_get_path('module', 'chosen') . '/chosen.js',
-    array('type' => 'file', 'scope' => 'footer', 'weight' => JS_DEFAULT)
-  );
-}
-
-/**
  * Implements hook_menu().
  */
 function chosen_menu() {
@@ -119,50 +97,58 @@ function chosen_field_widget_form_alter(&$element, &$form_state, $context) {
 }
 
 /**
- * Implements hook_libraries_info().
+ * Implements hook_library().
  */
-function chosen_libraries_info() {
-  $libraries['chosen'] = array(
-    'name' => 'Chosen',
-    'vendor url' => 'http://harvesthq.github.com/chosen/',
-    'download url' => 'https://github.com/harvesthq/chosen.git',
-    'path' => 'chosen',
-    'version arguments' => array(
-      'file' => 'VERSION',
-      'pattern' => '/(.*)/',
-      'lines' => 1,
+function chosen_library() {
+  $library_path = module_exists('libraries') ? libraries_get_path('chosen') : 'sites/all/libraries/chosen';
+  $info['chosen'] = array(
+    'title' => 'Chosen',
+    'website' => 'http://harvesthq.github.com/chosen',
+    'version' => '0.10.0',
+    'js' => array(
+      $library_path . '/chosen.jquery.min.js' => array('group' => 'JS_LIBRARY'),
     ),
-    'files' => array(
-      'js' => array(
-        'chosen.jquery.min.js',
-      ),
-      'css' => array(
-        'chosen.css',
-      ),
-    ),
-    'variants' => array(
-      'minified' => array(
-        'files' => array(
-          'js' => array(
-            'chosen.jquery.min.js',
-          ),
-          'css' => array(
-            'chosen.css',
-          ),
-        ),
-      ),
-      'source' => array(
-        'files' => array(
-          'js' => array(
-            'chosen.jquery.js',
-          ),
-          'css' => array(
-            'chosen.css',
-          ),
-        ),
-      ),
+    'css' => array(
+      $library_path . '/chosen.css' => array(),
     ),
   );
 
-  return $libraries;
+  $module_path = drupal_get_path('module', 'chosen');
+  $info['drupal.chosen'] = array(
+    'title' => 'Drupal Chosen integration',
+    'website' => 'http://drupal.org/project/chosen',
+    'version' => '1.0',
+    'js' => array(
+      $module_path . '/chosen.js' => array(),
+      array(
+        'data' => array(
+          'chosen' => array(
+            'selector' => variable_get('chosen_jquery_selector', 'select:visible'),
+            'minimum' => variable_get('chosen_minimum', 20),
+            'minimum_width' => variable_get('chosen_minimum_width', 200),
+            'search_contains' => (variable_get('chosen_search_contains', FALSE)) ? TRUE : FALSE,
+            'placeholder_text_multiple' => t(variable_get('chosen_placeholder_text_multiple', 'Choose some options')),
+            'placeholder_text_single' => t(variable_get('chosen_placeholder_text_single', 'Choose an option')),
+            'no_results_text' => t(variable_get('chosen_no_results_text', 'No results match')),
+          ),
+        ),
+        'type' => 'setting',
+      ),
+    ),
+    'css' => array(
+      $module_path . '/css/chosen-drupal.css' => array(),
+    ),
+    'dependencies' => array(
+      array('chosen', 'chosen'),
+    ),
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function chosen_element_info_alter(&$info) {
+  $info['select']['#attached']['library'][] = array('chosen', 'drupal.chosen');
 }
