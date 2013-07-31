@@ -1,6 +1,6 @@
 (function($) {
   Drupal.behaviors.chosen = {
-    attach: function(context, setings) {
+    attach: function(context, settings) {
       var minWidth = settings.chosen.minimum_width;
       //define options
       var options = {};
