@@ -9,7 +9,9 @@
   height: auto;
 }
 
-.container-inline div.chosen-container, 
+.container-inline div.chosen-container {
+	display: inline-block;
+}
 .container-inline div.chosen-container div {
 	display: block;
 }
