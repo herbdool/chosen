@@ -12,9 +12,9 @@ function chosen_requirements($phase) {
 
   if ($phase == 'runtime') {
     $t = get_t();
-    $libraries = libraries_get_libraries();
-
-    if (empty($libraries['chosen'])) {
+    $chosen_path = chosen_get_chosen_path();
+    
+    if (!$chosen_path) {
       $requirements['chosen_js'] = array(
         'title' => $t('Chosen JavaScript file'),
         'severity' => REQUIREMENT_ERROR,

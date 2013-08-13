@@ -157,3 +157,23 @@ function chosen_element_info_alter(&$info) {
     $info['date_combo']['#attached']['library'][] = array('chosen', 'drupal.chosen');
   }
 }
+
+/**
+ * Get the location of the chosen library.
+ *
+ * @return
+ *   The location of the library, or FALSE if the library isn't installed.
+ */
+function chosen_get_chosen_path() {
+  $path = FALSE;
+  if (function_exists('libraries_get_path')) {
+    $path = libraries_get_path('chosen');
+    if (!file_exists($path)) {
+      $path = FALSE;
+    }
+  }
+  elseif (file_exists('sites/all/libraries/chosen/chosen.jquery.min.js')) {
+    $path = 'sites/all/libraries/chosen';
+  }
+  return $path;
+}
