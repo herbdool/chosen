@@ -3,10 +3,6 @@
  * Drupal-specific CSS fixes for the Chosen module
  */
 
-.chzn-container {
-  display: table !important;
-}
-
 .chosen-container.error .chosen-single,
 .chosen-container.error .chosen-single span {
 	line-height: inherit;
