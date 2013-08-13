@@ -12,14 +12,7 @@ function chosen_admin_settings($form, &$form_state) {
   $form['chosen_minimum'] = array(
     '#type' => 'select',
     '#title' => t('Minimum number of options'),
-    '#options' => array(
-      0 => t('always apply'),
-      5 =>  5,
-      10 =>  10,
-      15 =>  15,
-      20 =>  20,
-      25 =>  25,
-    ),
+    '#options' => drupal_map_assoc(array_merge(array('0' => t('Always Apply')), range(1, 25))),
     '#default_value' => variable_get('chosen_minimum', 20),
     '#description' => t('The minimum number of options to apply Chosen. Example : choosing 10 will only apply Chosen if the number of options is greater or equal to 10.')
   );
