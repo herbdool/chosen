@@ -110,10 +110,10 @@ function chosen_library() {
     'js' => array(
       $library_path . '/chosen.jquery.min.js' => array('group' => 'JS_LIBRARY'),
     ),
-    'css' => array(
-      $library_path . '/chosen.css' => array(),
-    ),
   );
+  if (variable_get('chosen_use_theme', TRUE)) {
+    $info['chosen']['css'] = array($library_path . '/chosen.css' => array());
+  }
 
   $module_path = drupal_get_path('module', 'chosen');
   $info['drupal.chosen'] = array(
@@ -129,6 +129,8 @@ function chosen_library() {
             'minimum' => variable_get('chosen_minimum', 20),
             'minimum_width' => variable_get('chosen_minimum_width', 200),
             'search_contains' => (variable_get('chosen_search_contains', FALSE)) ? TRUE : FALSE,
+            'disable_search' => (variable_get('chosen_disable_search', FALSE)) ? TRUE : FALSE,
+            'disable_search_threshold' => variable_get('chosen_disable_search_threshold', 0),
             'placeholder_text_multiple' => t(variable_get('chosen_placeholder_text_multiple', 'Choose some options')),
             'placeholder_text_single' => t(variable_get('chosen_placeholder_text_single', 'Choose an option')),
             'no_results_text' => t(variable_get('chosen_no_results_text', 'No results match')),

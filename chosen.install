@@ -46,4 +46,7 @@ function chosen_uninstall() {
   variable_del('chosen_placeholder_text_multiple');
   variable_del('chosen_placeholder_text_single');
   variable_del('chosen_no_results_text');
+  variable_del('chosen_use_theme');
+  variable_del('chosen_disable_search');
+  variable_del('chosen_disable_search_threshold');
 }

@@ -5,6 +5,8 @@
       var minOptions = settings.chosen.minimum;
       // Define options.
       var options = {};
+      options.disable_search = Drupal.settings.chosen.disable_search;
+      options.disable_search_threshold = settings.chosen.disable_search_threshold;
       options.search_contains = settings.chosen.search_contains;
       options.placeholder_text_multiple = settings.chosen.placeholder_text_multiple;
       options.placeholder_text_single = settings.chosen.placeholder_text_single;

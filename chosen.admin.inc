@@ -17,6 +17,14 @@ function chosen_admin_settings($form, &$form_state) {
     '#description' => t('The minimum number of options to apply Chosen. Example : choosing 10 will only apply Chosen if the number of options is greater or equal to 10.')
   );
   
+  $form['chosen_disable_search_threshold'] = array(
+    '#type' => 'select',
+    '#title' => t('Minimum number to show Search on Single Select'),
+    '#options' => drupal_map_assoc(array_merge(array('0' => 'Never Apply'), range(1, 25))),
+    '#default_value' => variable_get('chosen_disable_search_threshold', 0),
+    '#description' => t('The minimum number of options to apply Chosen search box. Example : choosing 10 will only apply Chosen search if the number of options is greater or equal to 10.')
+  );
+
   $form['chosen_minimum_width'] = array(
     '#type' => 'textfield',
     '#title' => t('Minimum width of widget'),
@@ -44,6 +52,18 @@ function chosen_admin_settings($form, &$form_state) {
     '#default_value' => variable_get('chosen_search_contains', FALSE),
     '#description' => t('Per default chosen searches only at beginning of words. Enable this option will also find results in the middle of words.
       Example: Search for <em>land</em> will also find <code>Switzer<strong>land</strong></code>.'),
+  );
+  $form['options']['chosen_disable_search'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Disable search box'),
+    '#default_value' => variable_get('chosen_disable_search', FALSE),
+    '#description' => t('Enable or disable the search box in the results list to filter out possible options.'),
+  );
+  $form['options']['chosen_use_theme'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use the default chosen theme'),
+    '#default_value' => variable_get('chosen_use_theme', TRUE),
+    '#description' => t('Enable or disable the default chosen CSS file. Disable this option if your theme contains custom styles for Chosen replacements.'),
   );
 
   $form['strings'] = array(
