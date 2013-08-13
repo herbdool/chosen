@@ -9,6 +9,7 @@
       options.placeholder_text_multiple = settings.chosen.placeholder_text_multiple;
       options.placeholder_text_single = settings.chosen.placeholder_text_single;
       options.no_results_text = settings.chosen.no_results_text;
+      options.inherit_select_classes = true;
 
       $(settings.chosen.selector, context)
         .not('#field-ui-field-overview-form select, #field-ui-display-overview-form select') //disable chosen on field ui
@@ -22,7 +23,7 @@
       });
 
       //enable Chosen for widgets
-      $('.chosen-widget', context).each(function() {
+      $('select.chosen-widget', context).each(function() {
         options = $.extend(options, {
           width: (($(this).width() < minWidth) ? minWidth : $(this).width()) + 'px'
         });
