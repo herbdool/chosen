@@ -3,7 +3,7 @@
     attach: function(context, settings) {
       var minWidth = settings.chosen.minimum_width;
       var minOptions = settings.chosen.minimum;
-      //define options
+      // Define options.
       var options = {};
       options.search_contains = settings.chosen.search_contains;
       options.placeholder_text_multiple = settings.chosen.placeholder_text_multiple;
@@ -22,7 +22,7 @@
           }
       });
 
-      //enable Chosen for widgets
+      // Enable chosen for widgets.
       $('select.chosen-widget', context).each(function() {
         options = $.extend(options, {
           width: (($(this).width() < minWidth) ? minWidth : $(this).width()) + 'px'
