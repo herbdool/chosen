@@ -13,7 +13,11 @@
       options.no_results_text = settings.chosen.no_results_text;
       options.inherit_select_classes = true;
 
-      $(settings.chosen.selector, context)
+      // Prepare selector and add unwantend selectors.
+      var selector = settings.chosen.selector;
+      selector = selector + '\n.tabledrag-hide select'
+
+      $(selector, context)
         .not('#field-ui-field-overview-form select, #field-ui-display-overview-form select') //disable chosen on field ui
         .each(function() {
           if ($(this).find('option').size() >= minOptions || minOptions == 'Always Apply') {
