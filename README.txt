@@ -21,3 +21,10 @@ If you have drush make installed, you can use the chosen.make file to download t
 
 There are accessibility problems with the main library as identified here:
 	https://github.com/harvesthq/chosen/issues/264
+
+-- TROUBLE SHOOTING --
+
+  How to exlude a select field from becoming a chosen select.
+    - go to the configuration page and add your field using the jquery "not"
+      operator to the textarea with the comma seperated values.
+      For date fields this could look like: select:not([name*='day'],[name*='year'],[name*='month'])
