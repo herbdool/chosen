@@ -15,7 +15,7 @@
 
       // Prepare selector and add unwantend selectors.
       var selector = settings.chosen.selector;
-      selector = selector + '\n.tabledrag-hide select'
+      selector = selector + ', .tabledrag-hide select'
 
       $(selector, context)
         .not('#field-ui-field-overview-form select, #field-ui-display-overview-form select') //disable chosen on field ui
