@@ -3,3 +3,4 @@ description = Makes select elements more user-friendly using <a href="http://har
 configure = admin/config/user-interface/chosen
 core = 7.x
 
+dependencies[] = jquery_update
