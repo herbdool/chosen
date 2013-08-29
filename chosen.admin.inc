@@ -9,14 +9,22 @@
  * Returns with the general configuration form.
  */
 function chosen_admin_settings($form, &$form_state) {
-  $form['chosen_minimum'] = array(
+  $form['chosen_minimum_single'] = array(
     '#type' => 'select',
-    '#title' => t('Minimum number of options'),
+    '#title' => t('Minimum number of options for single select'),
     '#options' => drupal_map_assoc(array_merge(array('0' => t('Always Apply')), range(1, 25))),
-    '#default_value' => variable_get('chosen_minimum', 20),
-    '#description' => t('The minimum number of options to apply Chosen. Example : choosing 10 will only apply Chosen if the number of options is greater or equal to 10.')
+    '#default_value' => variable_get('chosen_minimum_single', 20),
+    '#description' => t('The minimum number of options to apply Chosen for single select fields. Example : choosing 10 will only apply Chosen if the number of options is greater or equal to 10.')
   );
-  
+
+  $form['chosen_minimum_multiple'] = array(
+    '#type' => 'select',
+    '#title' => t('Minimum number of options for multi select'),
+    '#options' => drupal_map_assoc(array_merge(array('0' => t('Always Apply')), range(1, 25))),
+    '#default_value' => variable_get('chosen_minimum_multiple', 20),
+    '#description' => t('The minimum number of options to apply Chosen for multi select fields. Example : choosing 10 will only apply Chosen if the number of options is greater or equal to 10.')
+  );
+
   $form['chosen_disable_search_threshold'] = array(
     '#type' => 'select',
     '#title' => t('Minimum number to show Search on Single Select'),

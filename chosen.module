@@ -126,7 +126,8 @@ function chosen_library() {
         'data' => array(
           'chosen' => array(
             'selector' => variable_get('chosen_jquery_selector', 'select:visible'),
-            'minimum' => variable_get('chosen_minimum', 20),
+            'minimum_single' => variable_get('chosen_minimum_single', 20),
+            'minimum_multiple' => variable_get('chosen_minimum_multiple', 20),
             'minimum_width' => variable_get('chosen_minimum_width', 200),
             'search_contains' => (variable_get('chosen_search_contains', FALSE)) ? TRUE : FALSE,
             'disable_search' => (variable_get('chosen_disable_search', FALSE)) ? TRUE : FALSE,
@@ -154,10 +155,36 @@ function chosen_library() {
  * Implements hook_element_info_alter().
  */
 function chosen_element_info_alter(&$info) {
-  $info['select']['#attached']['library'][] = array('chosen', 'drupal.chosen');
-  if(module_exists('date')) {
-    $info['date_combo']['#attached']['library'][] = array('chosen', 'drupal.chosen');
+  $info['select']['#pre_render'][] = 'chosen_pre_render_select';
+
+  if (module_exists('date')) {
+    $info['date_combo']['#pre_render'][] = 'chosen_pre_render_select';
   }
+}
+
+/**
+ * Implementation of chosen_pre_render_select().
+ */
+function chosen_pre_render_select($element) {
+  $element['#attached'] = array(
+    'library' => array(
+      array('chosen', 'drupal.chosen'),
+    ),
+    'js' => array(
+      array(
+        'data' => array(
+          'chosen' => array(
+            'multiple' => array(
+              $element['#name'] => $element['#multiple'],
+            ),
+          ),
+        ),
+        'type' => 'setting',
+      ),
+    ),
+  );
+
+  return $element;
 }
 
 /**

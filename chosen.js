@@ -2,8 +2,11 @@
   Drupal.behaviors.chosen = {
     attach: function(context, settings) {
       var minWidth = settings.chosen.minimum_width;
-      var minOptions = settings.chosen.minimum;
+      var minOptionsSingle = settings.chosen.minimum_single;
+      var minOptionsMultiple = settings.chosen.minimum_multiple;
+      var minOptions;
       // Define options.
+      var multiple = Drupal.settings.chosen.multiple;
       var options = {};
       options.disable_search = Drupal.settings.chosen.disable_search;
       options.disable_search_threshold = settings.chosen.disable_search_threshold;
@@ -20,6 +23,11 @@
       $(selector, context)
         .not('#field-ui-field-overview-form select, #field-ui-display-overview-form select') //disable chosen on field ui
         .each(function() {
+          var name = $(this).attr('name');
+          minOptions = minOptionsSingle;
+          if (multiple[name] != false) {
+            minOptions = minOptionsMultiple;
+          }
           if ($(this).find('option').size() >= minOptions || minOptions == 'Always Apply') {
             options = $.extend(options, {
               width: (($(this).width() < minWidth) ? minWidth : $(this).width()) + 'px'

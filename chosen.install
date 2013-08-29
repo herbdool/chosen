@@ -39,7 +39,8 @@ function chosen_requirements($phase) {
  */
 function chosen_uninstall() {
   // Delete created variables.
-  variable_del('chosen_minimum');
+  variable_del('chosen_minimum_single');
+  variable_del('chosen_minimum_multiple');
   variable_del('chosen_minimum_width');
   variable_del('chosen_search_contains');
   variable_del('chosen_jquery_selector');
@@ -49,4 +50,15 @@ function chosen_uninstall() {
   variable_del('chosen_use_theme');
   variable_del('chosen_disable_search');
   variable_del('chosen_disable_search_threshold');
+}
+
+/**
+ * Transfer the old chosen minimum value to the new chosen minimum single and
+ * chosen minimum multiple variables.
+ */
+function chosen_update_7201() {
+  $chosen_minimum = variable_get('chosen_minimum', 20);
+  variable_set('chosen_minimum_single', $chosen_minimum);
+  variable_set('chosen_minimum_multiple', $chosen_minimum);
+  variable_del('chosen_minimum');
 }
