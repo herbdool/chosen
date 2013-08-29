@@ -166,6 +166,14 @@ function chosen_element_info_alter(&$info) {
  * Implementation of chosen_pre_render_select().
  */
 function chosen_pre_render_select($element) {
+  $field_info = isset($element['#field_name']) ? field_info_field($element['#field_name']) : FALSE;
+
+  $element_name = $element['#name'];
+  if(!empty($element['#multiple'])) {
+    // We need to add those brackets for multivalue fields.
+    $element_name = $element['#name'] . '[]';
+  }
+
   $element['#attached'] = array(
     'library' => array(
       array('chosen', 'drupal.chosen'),
@@ -175,7 +183,10 @@ function chosen_pre_render_select($element) {
         'data' => array(
           'chosen' => array(
             'multiple' => array(
-              $element['#name'] => $element['#multiple'],
+              $element_name => $element['#multiple'],
+            ),
+            'max_selected_options' => array(
+              $element_name => isset($field_info['cardinality']) ? $field_info['cardinality'] : "1",
             ),
           ),
         ),

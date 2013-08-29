@@ -7,6 +7,7 @@
       var minOptions;
       // Define options.
       var multiple = Drupal.settings.chosen.multiple;
+      var maxSelectedOptions = Drupal.settings.chosen.max_selected_options;
       var options = {};
       options.disable_search = Drupal.settings.chosen.disable_search;
       options.disable_search_threshold = settings.chosen.disable_search_threshold;
@@ -28,6 +29,12 @@
           if (multiple[name] != false) {
             minOptions = minOptionsMultiple;
           }
+
+          options.max_selected_options = 1;
+          if (maxSelectedOptions[name] != undefined) {
+            options.max_selected_options = maxSelectedOptions[name];
+          }
+
           if ($(this).find('option').size() >= minOptions || minOptions == 'Always Apply') {
             options = $.extend(options, {
               width: (($(this).width() < minWidth) ? minWidth : $(this).width()) + 'px'
