@@ -174,25 +174,19 @@ function chosen_pre_render_select($element) {
     $element_name = $element['#name'] . '[]';
   }
 
-  $element['#attached'] = array(
-    'library' => array(
-      array('chosen', 'drupal.chosen'),
-    ),
-    'js' => array(
-      array(
-        'data' => array(
-          'chosen' => array(
-            'multiple' => array(
-              $element_name => $element['#multiple'],
-            ),
-            'max_selected_options' => array(
-              $element_name => isset($field_info['cardinality']) ? $field_info['cardinality'] : "1",
-            ),
-          ),
+  $element['#attached']['library'][] = array('chosen', 'drupal.chosen');
+  $element['#attached']['js'][] = array(
+    'data' => array(
+      'chosen' => array(
+        'multiple' => array(
+          $element_name => $element['#multiple'],
         ),
-        'type' => 'setting',
+        'max_selected_options' => array(
+          $element_name => isset($field_info['cardinality']) ? $field_info['cardinality'] : "1",
+        ),
       ),
     ),
+    'type' => 'setting',
   );
 
   return $element;
