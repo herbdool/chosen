@@ -31,8 +31,7 @@
             minOptions = minOptionsMultiple;
           }
 
-          options.max_selected_options = 1;
-          if (maxSelectedOptions[name] != undefined) {
+          if (maxSelectedOptions[name] != false) {
             options.max_selected_options = maxSelectedOptions[name];
           }
 
