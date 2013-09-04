@@ -20,6 +20,15 @@ If you have drush make installed, you can use the chosen.make file to download t
 	1. drush make sites/all/modules/chosen/chosen.make --no-core
 	2. drush en chosen -y
 
+-- INSTALLATION VIA DRUSH --
+
+ A Drush command is provided for easy installation of the Chosen plugin.
+
+ drush chosenplugin
+
+ The command will download the plugin and unpack it in "sites/all/libraries".
+ It is possible to add another path as an option to the command, but not
+ recommended unless you know what you are doing.
 
 -- ACCESSIBILITY CONCERN --
 
