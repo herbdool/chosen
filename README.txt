@@ -13,13 +13,6 @@ Chosen uses the Chosen jQuery plugin to make your <select> elements more user-fr
 
   - jQuery Update - Chosen library is having some trouble with jquery <= 1.6, therefore we decided to make jquery_update as a dependency.
 
-
--- INSTALLATION WITH MAKE FILE --
-
-If you have drush make installed, you can use the chosen.make file to download the recommended version of chosen.
-	1. drush make sites/all/modules/chosen/chosen.make --no-core
-	2. drush en chosen -y
-
 -- INSTALLATION VIA DRUSH --
 
  A Drush command is provided for easy installation of the Chosen plugin.
