@@ -8,6 +8,11 @@
  */
 
 /**
+ * Define chosen library url
+ */
+define('CHOSEN_WEBSITE_URL', 'http://harvesthq.github.com/chosen');
+
+/**
  * Widget that Chosen can be applied to
  */
 define('CHOSEN_WIDGETS', serialize(array('options_select', 'date_select')));
@@ -76,11 +81,19 @@ function chosen_field_widget_settings_form($field, $instance) {
     '#parents' => array('instance', 'widget', 'settings'),
   );
 
-  $form['chosen']['apply_chosen'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Apply Chosen on this field'),
-    '#default_value' => isset($settings['apply_chosen']) ? $settings['apply_chosen'] : FALSE,
-  );
+  $chosen_path = chosen_get_chosen_path();
+  if ($chosen_path) {
+    $form['chosen']['apply_chosen'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Apply Chosen on this field'),
+      '#default_value' => isset($settings['apply_chosen']) ? $settings['apply_chosen'] : FALSE,
+    );
+  }
+  else {
+    $form['chosen']['chosen_library_missing'] = array(
+      '#markup' => t('The library could not be detected. You need to download the !chosen and extract the entire contents of the archive into the %path directory on your server.', array('!chosen' => l(t('Chosen JavaScript file'), CHOSEN_WEBSITE_URL), '%path' => 'sites/all/libraries')),
+    );
+  }
 
   return $form;
 }
@@ -105,7 +118,7 @@ function chosen_library() {
   $library_path = module_exists('libraries') ? libraries_get_path('chosen') : 'sites/all/libraries/chosen';
   $info['chosen'] = array(
     'title' => 'Chosen',
-    'website' => 'http://harvesthq.github.com/chosen',
+    'website' => CHOSEN_WEBSITE_URL,
     'version' => '0.10.0',
     'js' => array(
       $library_path . '/chosen.jquery.min.js' => array('group' => 'JS_LIBRARY'),

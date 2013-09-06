@@ -9,6 +9,15 @@
  * Returns with the general configuration form.
  */
 function chosen_admin_settings($form, &$form_state) {
+
+  $chosen_path = chosen_get_chosen_path();
+  if (!$chosen_path) {
+    drupal_set_message(t('The library could not be detected. You need to download the !chosen and extract the entire contents of the archive into the %path directory on your server.',
+    array('!chosen' => l(t('Chosen JavaScript file'), CHOSEN_WEBSITE_URL), '%path' => 'sites/all/libraries')
+    ), 'error');
+    return;
+  }
+
   $form['chosen_minimum_single'] = array(
     '#type' => 'select',
     '#title' => t('Minimum number of options for single select'),
