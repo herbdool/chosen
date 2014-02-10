@@ -135,8 +135,8 @@ function chosen_library() {
     'version' => '1.0',
     'js' => array(
       $module_path . '/chosen.js' => array(
-        'scope' => 'footer',
-        'weight' => JS_DEFAULT,
+        'group' => JS_DEFAULT,
+        'weight' => 100,
       ),
       array(
         'data' => array(
