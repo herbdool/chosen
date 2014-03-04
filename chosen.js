@@ -29,7 +29,7 @@
       };
 
       $(selector, context)
-        .not('#field-ui-field-overview-form select, #field-ui-display-overview-form select, .wysiwyg, .draggable select[name$="[weight]"], .draggable select[name$="[position]"]') //disable chosen on field ui
+        .not('#field-ui-field-overview-form select, #field-ui-display-overview-form select, .wysiwyg, .draggable select[name$="[weight]"], .draggable select[name$="[position]"], .chosen-disabled') //disable chosen on field ui
         .filter(function() {
           // Filter out select widgets that do not meet the minimum number of
           // options.
@@ -48,7 +48,7 @@
       });
 
       // Enable chosen for widgets.
-      $('select.chosen-widget', context).each(function() {
+      $('select.chosen-enabled, select.chosen-widget', context).each(function() {
         options = getElementOptions(this);
         $(this).chosen(options);
       });

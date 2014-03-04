@@ -65,8 +65,7 @@ function chosen_form_field_ui_field_edit_form_alter(&$form, $form_state) {
  */
 function chosen_field_widget_form_alter(&$element, &$form_state, $context) {
   if (!empty($context['instance']['widget']['settings']['apply_chosen'])) {
-    // Deprecated widget setting.
-    $element['#attributes']['class'][] = 'chosen-widget';
+    $element['#attributes']['class'][] = 'chosen-enabled';
   }
 }
 
@@ -149,6 +148,18 @@ function chosen_element_info_alter(&$info) {
  * Implementation of chosen_pre_render_select().
  */
 function chosen_pre_render_select($element) {
+  // If the #chosen FAPI property is set, then add the appropriate class.
+  if (isset($element['#chosen'])) {
+    if (!empty($element['#chosen'])) {
+      $element['#attributes']['class'][] = 'chosen-enabled';
+    }
+    else {
+      $element['#attributes']['class'][] = 'chosen-disabled';
+      // No point in continuing if Chosen is not enabled for this element.
+      return $element;
+    }
+  }
+
   if (isset($element['#field_name']) && !empty($element['#multiple'])) {
     $field = field_info_field($element['#field_name']);
     if ($field['cardinality'] != FIELD_CARDINALITY_UNLIMITED && $field['cardinality'] > 1) {
