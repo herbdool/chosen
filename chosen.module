@@ -116,10 +116,11 @@ function chosen_field_widget_form_alter(&$element, &$form_state, $context) {
  */
 function chosen_library() {
   $library_path = module_exists('libraries') ? libraries_get_path('chosen') : 'sites/all/libraries/chosen';
+
   $info['chosen'] = array(
     'title' => 'Chosen',
     'website' => CHOSEN_WEBSITE_URL,
-    'version' => '0.10.0',
+    'version' => '1.1.0',
     'js' => array(
       $library_path . '/chosen.jquery.min.js' => array('group' => 'JS_LIBRARY'),
     ),
