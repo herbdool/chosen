@@ -129,6 +129,19 @@ function chosen_library() {
     $info['chosen']['css'] = array($library_path . '/chosen.css' => array());
   }
 
+  // All the settings that are actually passed through into the chosen()
+  // function are contained in this array.
+  $options = array(
+    'disable_search' => (bool) variable_get('chosen_disable_search', FALSE),
+    'disable_search_threshold' => variable_get('chosen_disable_search_threshold', 0),
+    'search_contains' => (bool) variable_get('chosen_search_contains', FALSE),
+    'placeholder_text_multiple' => variable_get('chosen_placeholder_text_multiple', t('Choose some options')),
+    'placeholder_text_single' => variable_get('chosen_placeholder_text_single', t('Choose an option')),
+    'no_results_text' => variable_get('chosen_no_results_text', t('No results match')),
+    'width' => variable_get('chosen_minimum_width', 200),
+    'inherit_select_classes' => TRUE,
+  );
+
   $module_path = drupal_get_path('module', 'chosen');
   $info['drupal.chosen'] = array(
     'title' => 'Drupal Chosen integration',
@@ -146,12 +159,7 @@ function chosen_library() {
             'minimum_single' => variable_get('chosen_minimum_single', 20),
             'minimum_multiple' => variable_get('chosen_minimum_multiple', 20),
             'minimum_width' => variable_get('chosen_minimum_width', 200),
-            'search_contains' => (variable_get('chosen_search_contains', FALSE)) ? TRUE : FALSE,
-            'disable_search' => (variable_get('chosen_disable_search', FALSE)) ? TRUE : FALSE,
-            'disable_search_threshold' => variable_get('chosen_disable_search_threshold', 0),
-            'placeholder_text_multiple' => variable_get('chosen_placeholder_text_multiple', t('Choose some options')),
-            'placeholder_text_single' => variable_get('chosen_placeholder_text_single', t('Choose an option')),
-            'no_results_text' => variable_get('chosen_no_results_text', t('No results match')),
+            'options' => $options,
           ),
         ),
         'type' => 'setting',
