@@ -2,5 +2,3 @@ name = Chosen
 description = Makes select elements more user-friendly using <a href="http://harvesthq.github.com/chosen/">Chosen</a>.
 configure = admin/config/user-interface/chosen
 core = 7.x
-
-dependencies[] = jquery_update
