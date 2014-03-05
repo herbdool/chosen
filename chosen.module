@@ -10,7 +10,7 @@
 /**
  * Define chosen library url
  */
-define('CHOSEN_WEBSITE_URL', 'http://harvesthq.github.com/chosen');
+define('CHOSEN_WEBSITE_URL', 'http://harvesthq.github.io/chosen');
 
 /**
  * Widget that Chosen can be applied to
