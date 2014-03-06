@@ -51,7 +51,7 @@ function chosen_field_widget_info_alter(&$info) {
  */
 function chosen_form_field_ui_field_edit_form_alter(&$form, $form_state) {
   if (empty($form['#field']['locked']) && isset($form['#instance']['widget']['settings']['apply_chosen'])) {
-    $form['instance']['widget']['settings']['chosen'] = array(
+    $form['instance']['widget']['settings']['apply_chosen'] = array(
       '#type' => 'checkbox',
       '#title' => t('Apply Chosen on this field'),
       '#default_value' => !empty($form['#instance']['widget']['settings']['apply_chosen']),
