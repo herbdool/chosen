@@ -102,7 +102,7 @@ function chosen_library() {
   $module_path = drupal_get_path('module', 'chosen');
   $info['drupal.chosen'] = array(
     'title' => 'Drupal Chosen integration',
-    'website' => 'http://drupal.org/project/chosen',
+    'website' => 'https://drupal.org/project/chosen',
     'version' => '1.1.0',
     'js' => array(
       $module_path . '/chosen.js' => array(
