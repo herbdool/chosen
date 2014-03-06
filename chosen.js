@@ -2,49 +2,49 @@
   Drupal.behaviors.chosen = {
     attach: function(context, settings) {
       settings.chosen = settings.chosen || Drupal.settings.chosen;
-      var minOptionsSingle = settings.chosen.minimum_single;
-      var minOptionsMultiple = settings.chosen.minimum_multiple;
-      var minOptions;
-      // Define options.
-      var multiple = Drupal.settings.chosen.multiple;
-      var maxSelectedOptions = Drupal.settings.chosen.max_selected_options;
 
       // Prepare selector and add unwantend selectors.
       var selector = settings.chosen.selector;
 
       // Function to prepare all the options together for the chosen() call.
       var getElementOptions = function (element) {
-        var options = jQuery.extend({}, settings.chosen.options);
+        var options = $.extend({}, settings.chosen.options);
+
         // The width default option is considered the minimum width, so this
         // must be evaluated for every option.
-        if ($(element).width() > options.width) {
-          options.width = $(element).width() + 'px';
+        if ($(element).width() < settings.chosen.minimum_width) {
+          options.width = settings.chosen.minimum_width + 'px';
         }
         else {
-          // Default width is a number so we need to add 'px' to make it work.
-          options.width += 'px';
+          options.width = $(element).width() + 'px';
         }
+
+        // Some field widgets have cardinality, so we must respect that.
+        // @see chosen_pre_render_select()
+        if ($(element).attr('multiple') && $(element).data('cardinality')) {
+          options.max_selected_options = $(element).data('cardinality');
+        }
+
         return options;
       };
 
       $(selector, context)
         .not('#field-ui-field-overview-form select, #field-ui-display-overview-form select, .wysiwyg, .draggable select[name$="[weight]"], .draggable select[name$="[position]"]') //disable chosen on field ui
+        .filter(function() {
+          // Filter out select widgets that do not meet the minimum number of
+          // options.
+          var minOptions = $(this).attr('multiple') ? settings.chosen.minimum_multiple : settings.chosen.minimum_single;
+          if (!minOptions) {
+            // Zero value means no minimum.
+            return true;
+          }
+          else {
+            return $(this).find('option').length >= minOptions;
+          }
+        })
         .each(function() {
-          var name = $(this).attr('name');
           options = getElementOptions(this);
-
-          minOptions = minOptionsSingle;
-          if (multiple[name] !== false) {
-            minOptions = minOptionsMultiple;
-          }
-
-          if (maxSelectedOptions[name] !== false) {
-           options.max_selected_options = maxSelectedOptions[name];
-          }
-
-          if ($(this).find('option').size() >= minOptions || minOptions == 'Always Apply') {
-            $(this).chosen(options);
-          }
+          $(this).chosen(options);
       });
 
       // Enable chosen for widgets.

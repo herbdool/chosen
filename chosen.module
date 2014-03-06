@@ -13,11 +13,6 @@
 define('CHOSEN_WEBSITE_URL', 'http://harvesthq.github.io/chosen');
 
 /**
- * Widget that Chosen can be applied to
- */
-define('CHOSEN_WIDGETS', serialize(array('options_select', 'date_select')));
-
-/**
  * Implements hook_menu().
  */
 function chosen_menu() {
@@ -36,78 +31,42 @@ function chosen_menu() {
 }
 
 /**
- * Implements hook_form_alter().
- */
-function chosen_form_field_ui_field_edit_form_alter(&$form, $form_state) {
-  if (isset($form['instance']['widget']['type']['#value'])) {
-    $type = $form['instance']['widget']['type']['#value'];
-    if (in_array($type, unserialize(CHOSEN_WIDGETS))) {
-      $field = $form['#field'];
-      $instance = field_info_instance($form['instance']['entity_type']['#value'], $form['instance']['field_name']['#value'], $form['instance']['bundle']['#value']);
-      $form['instance'] += chosen_field_widget_settings_form($field, $instance);
-    }
-  }
-}
-
-/**
  * Implements hook_field_widget_info_alter().
  *
  * A list of settings needed by Chosen module for widgets.
  */
 function chosen_field_widget_info_alter(&$info) {
-  $settings = array(
-    'apply_chosen' => 0,
-  );
-
-  foreach (unserialize(CHOSEN_WIDGETS) as $widget) {
-    if (isset($info[$widget]['settings'])) {
-      $info[$widget]['settings'] += $settings;
+  foreach ($info as $widget => $widget_info) {
+    switch ($widget) {
+      case 'options_select':
+      case 'date_select':
+        $info[$widget]['settings']['apply_chosen'] = 0;
+        break;
     }
   }
 }
 
 /**
- * Implements hook_field_widget_settings_form().
+ * Implements hook_form_FORM_ID_alter().
  */
-function chosen_field_widget_settings_form($field, $instance) {
-  $widget = $instance['widget'];
-  $settings = $widget['settings'];
-
-  $form['chosen'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Chosen'),
-    '#collapsed' => TRUE,
-    '#collapsible' => TRUE,
-    '#parents' => array('instance', 'widget', 'settings'),
-  );
-
-  $chosen_path = chosen_get_chosen_path();
-  if ($chosen_path) {
-    $form['chosen']['apply_chosen'] = array(
+function chosen_form_field_ui_field_edit_form_alter(&$form, $form_state) {
+  if (empty($form['#field']['locked']) && isset($form['#instance']['widget']['settings']['apply_chosen'])) {
+    $form['instance']['widget']['settings']['chosen'] = array(
       '#type' => 'checkbox',
       '#title' => t('Apply Chosen on this field'),
-      '#default_value' => isset($settings['apply_chosen']) ? $settings['apply_chosen'] : FALSE,
+      '#default_value' => !empty($form['#instance']['widget']['settings']['apply_chosen']),
+      '#disabled' => !chosen_get_chosen_path(),
     );
   }
-  else {
-    $form['chosen']['chosen_library_missing'] = array(
-      '#markup' => t('The library could not be detected. You need to download the !chosen and extract the entire contents of the archive into the %path directory on your server.', array('!chosen' => l(t('Chosen JavaScript file'), CHOSEN_WEBSITE_URL), '%path' => 'sites/all/libraries')),
-    );
-  }
-
-  return $form;
 }
 
 /**
  * Implements hook_field_widget_form_alter().
  */
 function chosen_field_widget_form_alter(&$element, &$form_state, $context) {
-  $type = $context['instance']['widget']['type'];
-  if (in_array($type, unserialize(CHOSEN_WIDGETS))) {
-    $settings = $context['instance']['widget']['settings'];
-    if (!empty($settings['apply_chosen'])) {
-      $element['#attributes']['class'][] = 'chosen-widget';
-    }
+  if (!empty($context['instance']['widget']['settings']['apply_chosen'])) {
+    // Deprecated widget setting.
+    $element['#attributes']['class'][] = 'chosen-widget';
   }
 }
 
@@ -133,12 +92,11 @@ function chosen_library() {
   // function are contained in this array.
   $options = array(
     'disable_search' => (bool) variable_get('chosen_disable_search', FALSE),
-    'disable_search_threshold' => variable_get('chosen_disable_search_threshold', 0),
+    'disable_search_threshold' => (int) variable_get('chosen_disable_search_threshold', 0),
     'search_contains' => (bool) variable_get('chosen_search_contains', FALSE),
     'placeholder_text_multiple' => variable_get('chosen_placeholder_text_multiple', t('Choose some options')),
     'placeholder_text_single' => variable_get('chosen_placeholder_text_single', t('Choose an option')),
     'no_results_text' => variable_get('chosen_no_results_text', t('No results match')),
-    'width' => variable_get('chosen_minimum_width', 200),
     'inherit_select_classes' => TRUE,
   );
 
@@ -156,9 +114,9 @@ function chosen_library() {
         'data' => array(
           'chosen' => array(
             'selector' => variable_get('chosen_jquery_selector', 'select:visible'),
-            'minimum_single' => variable_get('chosen_minimum_single', 20),
-            'minimum_multiple' => variable_get('chosen_minimum_multiple', 20),
-            'minimum_width' => variable_get('chosen_minimum_width', 200),
+            'minimum_single' => (int) variable_get('chosen_minimum_single', 20),
+            'minimum_multiple' => (int) variable_get('chosen_minimum_multiple', 20),
+            'minimum_width' => (int) variable_get('chosen_minimum_width', 200),
             'options' => $options,
           ),
         ),
@@ -191,36 +149,14 @@ function chosen_element_info_alter(&$info) {
  * Implementation of chosen_pre_render_select().
  */
 function chosen_pre_render_select($element) {
-  $field_info = isset($element['#field_name']) ? field_info_field($element['#field_name']) : FALSE;
-
-  $element_name = $element['#name'];
-  if(!empty($element['#multiple'])) {
-    // We need to add those brackets for multivalue fields.
-    $element_name = $element['#name'] . '[]';
-  }
-
-  $max_selected_options = FALSE;
-  if (isset($field_info['cardinality'])) {
-    if ($field_info['cardinality'] != FIELD_CARDINALITY_UNLIMITED) {
-      $max_selected_options = $field_info['cardinality'];
+  if (isset($element['#field_name']) && !empty($element['#multiple'])) {
+    $field = field_info_field($element['#field_name']);
+    if ($field['cardinality'] != FIELD_CARDINALITY_UNLIMITED && $field['cardinality'] > 1) {
+      $element['#attributes']['data-cardinality'] = $field['cardinality'];
     }
   }
 
   $element['#attached']['library'][] = array('chosen', 'drupal.chosen');
-  $element['#attached']['js'][] = array(
-    'data' => array(
-      'chosen' => array(
-        'multiple' => array(
-          $element_name => isset($element['#multiple']) ? $element['#multiple'] : FALSE,
-        ),
-        'max_selected_options' => array(
-          $element_name => $max_selected_options,
-        ),
-      ),
-    ),
-    'type' => 'setting',
-  );
-
   return $element;
 }
 
