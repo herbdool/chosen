@@ -28,6 +28,12 @@
         return options;
       };
 
+      // Process elements that have opted-in for Chosen.
+      $('select.chosen-enable, select.chosen-widget', context).once('chosen', function() {
+        options = getElementOptions(this);
+        $(this).chosen(options);
+      });
+
       $(selector, context)
         // Disabled on:
         // - Field UI
@@ -52,12 +58,6 @@
           options = getElementOptions(this);
           $(this).chosen(options);
         });
-
-      // Process elements that have opted-in for Chosen.
-      $('select.chosen-enable, select.chosen-enabled, select.chosen-widget', context).once('chosen', function() {
-        options = getElementOptions(this);
-        $(this).chosen(options);
-      });
     }
   };
 })(jQuery);
