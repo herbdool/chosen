@@ -188,9 +188,8 @@ function chosen_pre_render_select($element) {
     }
   }
   else {
-    // Neither the #chosen property was set, or any chosen classes found.
-    // Do not add the library now.
-    return $element;
+    // Neither the #chosen property was set, nor any chosen classes found.
+    // This element still might match the site-wide critera, so add the library.
   }
 
   if (isset($element['#field_name']) && !empty($element['#multiple'])) {
