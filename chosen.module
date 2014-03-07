@@ -65,7 +65,7 @@ function chosen_form_field_ui_field_edit_form_alter(&$form, $form_state) {
  */
 function chosen_field_widget_form_alter(&$element, &$form_state, $context) {
   if (!empty($context['instance']['widget']['settings']['apply_chosen'])) {
-    $element['#attributes']['class'][] = 'chosen-enabled';
+    $element['#chosen'] = TRUE;
   }
 }
 
@@ -141,7 +141,7 @@ function chosen_element_info_alter(&$info) {
   $info['select']['#pre_render'][] = 'chosen_pre_render_select';
 
   if (module_exists('date')) {
-    $info['date_combo']['#pre_render'][] = 'chosen_pre_render_select';
+    $info['date_combo']['#pre_render'][] = 'chosen_pre_render_date_combo';
   }
 }
 
@@ -170,6 +170,38 @@ function chosen_pre_render_select($element) {
 
   $element['#attached']['library'][] = array('chosen', 'drupal.chosen');
   return $element;
+}
+
+/**
+ * Implementation of chosen_pre_render_date_combo().
+ */
+function chosen_pre_render_date_combo($element) {
+  // Because the date_combo field contains many different select elements, we
+  // need to recurse down and apply the FAPI property to each one.
+  if (isset($element['#chosen'])) {
+    chosen_element_apply_property_recursive($element, $element['#chosen']);
+  }
+  return $element;
+}
+
+/**
+ * Recurse through an element to apply the chosen property to any select fields.
+ */
+function chosen_element_apply_property_recursive(array &$element, $chosen_value = NULL) {
+  if (!isset($chosen_value)) {
+    if (isset($element['#chosen'])) {
+      $chosen_value = $element['#chosen'];
+    }
+    else {
+      return;
+    }
+  }
+  if (isset($element['#type']) && $element['#type'] == 'select') {
+    $element['#chosen'] = $chosen_value;
+  }
+  foreach (element_children($element) as $key) {
+    chosen_element_apply_property_recursive($element[$key], $chosen_value);
+  }
 }
 
 /**
