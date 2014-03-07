@@ -159,6 +159,10 @@ function chosen_element_info_alter(&$info) {
   if (module_exists('date')) {
     $info['date_combo']['#pre_render'][] = 'chosen_pre_render_date_combo';
   }
+
+  if (module_exists('select_or_other')) {
+    $info['select_or_other']['#pre_render'][] = 'chosen_pre_render_select_or_other';
+  }
 }
 
 /**
@@ -211,6 +215,16 @@ function chosen_pre_render_date_combo($element) {
   // need to recurse down and apply the FAPI property to each one.
   if (isset($element['#chosen'])) {
     chosen_element_apply_property_recursive($element, $element['#chosen']);
+  }
+  return $element;
+}
+
+/**
+ * Render API callback: Apply Chosen to a select_or_other element.
+ */
+function chosen_pre_render_select_or_other($element) {
+  if ($element['#select_type'] == 'select' && isset($element['#chosen'])) {
+    $element['select']['#chosen'] = $element['#chosen'];
   }
   return $element;
 }
