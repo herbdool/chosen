@@ -155,7 +155,7 @@ function chosen_pre_render_select($element) {
       $element['#attributes']['class'][] = 'chosen-enabled';
     }
     else {
-      $element['#attributes']['class'][] = 'chosen-disabled';
+      $element['#attributes']['class'][] = 'chosen-not-enabled';
       // No point in continuing if Chosen is not enabled for this element.
       return $element;
     }
