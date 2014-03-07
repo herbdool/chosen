@@ -152,13 +152,29 @@ function chosen_pre_render_select($element) {
   // If the #chosen FAPI property is set, then add the appropriate class.
   if (isset($element['#chosen'])) {
     if (!empty($element['#chosen'])) {
-      $element['#attributes']['class'][] = 'chosen-enabled';
+      // Element has opted-in for Chosen, ensure the library gets added.
+      $element['#attributes']['class'][] = 'chosen-enable';
     }
     else {
-      $element['#attributes']['class'][] = 'chosen-not-enabled';
-      // No point in continuing if Chosen is not enabled for this element.
+      $element['#attributes']['class'][] = 'chosen-disable';
+      // Element has opted-out of Chosen. Do not add the library now.
       return $element;
     }
+  }
+  elseif (isset($element['#attributes']['class']) && is_array($element['#attributes']['class'])) {
+    if (array_intersect($element['#attributes']['class'], array('chosen-disable'))) {
+      // Element has opted-out of Chosen. Do not add the library now.
+      return $element;
+    }
+    elseif (array_intersect($element['#attributes']['class'], array('chosen-enable', 'chosen-widget'))) {
+      // Element has opted-in for Chosen, ensure the library gets added.
+      // @todo Remove support for the deprecated chosen-widget class.
+    }
+  }
+  else {
+    // Neither the #chosen property was set, or any chosen classes found.
+    // Do not add the library now.
+    return $element;
   }
 
   if (isset($element['#field_name']) && !empty($element['#multiple'])) {

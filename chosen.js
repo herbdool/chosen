@@ -29,6 +29,7 @@
       };
 
       // Process elements that have opted-in for Chosen.
+      // @todo Remove support for the deprecated chosen-widget class.
       $('select.chosen-enable, select.chosen-widget', context).once('chosen', function() {
         options = getElementOptions(this);
         $(this).chosen(options);
