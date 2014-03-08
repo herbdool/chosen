@@ -43,8 +43,8 @@ function chosen_field_widget_info_alter(&$info) {
   );
 
   foreach ($widget_defaults as $widget => $default) {
-    if (isset($info['widget'])) {
-      $info['widget']['settings']['apply_chosen'] = $default;
+    if (isset($info[$widget])) {
+      $info[$widget]['settings']['apply_chosen'] = $default;
     }
   }
 }
