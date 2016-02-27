@@ -197,6 +197,9 @@ function chosen_pre_render_select($element) {
   }
 
   if (isset($element['#field_name']) && !empty($element['#multiple'])) {
+    // Remove '_none' from multi-select options.
+    unset($element['#options']['_none']);
+
     $field = field_info_field($element['#field_name']);
     if ($field['cardinality'] != FIELD_CARDINALITY_UNLIMITED && $field['cardinality'] > 1) {
       $element['#attributes']['data-cardinality'] = $field['cardinality'];
