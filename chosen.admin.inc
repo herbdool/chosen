@@ -90,6 +90,13 @@ function chosen_admin_settings($form, &$form_state) {
     '#description' => t('Enable or disable the default Chosen CSS file. Select a theme if it contains custom styles for Chosen replacements.'),
   );
 
+  $form['options']['chosen_allow_single_deselect'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Allow deselect on single selects'),
+    '#default_value' => variable_get('chosen_allow_single_deselect', FALSE),
+    '#description' => t("Enable or disable option deselection for single select fields. This will only work if the first option has blank text."),
+  );
+
   $form['strings'] = array(
     '#type' => 'fieldset',
     '#title' => t('Chosen strings'),

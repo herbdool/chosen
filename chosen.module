@@ -112,6 +112,7 @@ function chosen_library() {
   // All the settings that are actually passed through into the chosen()
   // function are contained in this array.
   $options = array(
+    'allow_single_deselect' => (bool) variable_get('chosen_allow_single_deselect', FALSE),
     'disable_search' => (bool) variable_get('chosen_disable_search', FALSE),
     'disable_search_threshold' => (int) variable_get('chosen_disable_search_threshold', 0),
     'search_contains' => (bool) variable_get('chosen_search_contains', FALSE),
