@@ -138,7 +138,7 @@ function chosen_library() {
             'selector' => variable_get('chosen_jquery_selector', 'select:visible'),
             'minimum_single' => (int) variable_get('chosen_minimum_single', 20),
             'minimum_multiple' => (int) variable_get('chosen_minimum_multiple', 20),
-            'minimum_width' => (int) variable_get('chosen_minimum_width', 200),
+            'minimum_width' => (int) variable_get('chosen_minimum_width', ''),
             'options' => $options,
           ),
         ),

@@ -46,10 +46,9 @@ function chosen_admin_settings($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Minimum width of widget'),
     '#field_suffix' => 'px',
-    '#required' => TRUE,
     '#size' => 3,
-    '#default_value' => variable_get('chosen_minimum_width', 200),
-    '#description' => t('The minimum width of the Chosen widget.'),
+    '#default_value' => variable_get('chosen_minimum_width', ''),
+    '#description' => t('The minimum width of the Chosen widget. Leave blank to have chosen determine this.'),
   );
 
   $form['chosen_jquery_selector'] = array(
