@@ -89,6 +89,17 @@ function chosen_admin_settings($form, &$form_state) {
     '#description' => t('Enable or disable the default Chosen CSS file. Select a theme if it contains custom styles for Chosen replacements.'),
   );
 
+  $form['options']['chosen_include'] = array(
+    '#type' => 'radios',
+    '#title' => t('Use chosen for admin pages and/or front end pages'),
+    '#options' => array(
+      CHOSEN_INCLUDE_EVERYWHERE => t('Include Chosen on every page'),
+      CHOSEN_INCLUDE_ADMIN => t('Include Chosen only on admin pages'),
+      CHOSEN_INCLUDE_NO_ADMIN => t('Include Chosen only on front end pages'),
+    ),
+    '#default_value' => variable_get('chosen_include', CHOSEN_INCLUDE_EVERYWHERE),
+  );
+
   $form['options']['chosen_allow_single_deselect'] = array(
     '#type' => 'checkbox',
     '#title' => t('Allow deselect on single selects'),
