@@ -8,7 +8,7 @@
  */
 
 /**
- * Define chosen library url
+ * Define chosen library url.
  */
 define('CHOSEN_WEBSITE_URL', 'http://harvesthq.github.io/chosen');
 define('CHOSEN_INCLUDE_ADMIN', 0);
@@ -107,7 +107,7 @@ function chosen_library() {
 
   $css_disabled_themes = variable_get('chosen_disabled_themes', array());
 
-  // Only add the Chosen CSS if it is not disabled for the active theme
+  // Only add the Chosen CSS if it is not disabled for the active theme.
   if (!in_array($theme, $css_disabled_themes, TRUE)) {
     $info['chosen']['css'] = array($library_path . '/chosen.css' => array());
   }
@@ -226,7 +226,7 @@ function chosen_pre_render_select($element) {
   }
 
   // Right to Left Support.
-  if($language->direction == 1) {
+  if ($language->direction == 1) {
     $element['#attributes']['class'][] = 'chosen-rtl';
   }
 
@@ -279,7 +279,7 @@ function chosen_element_apply_property_recursive(array &$element, $chosen_value 
 /**
  * Get the location of the chosen library.
  *
- * @return
+ * @return mixed
  *   The location of the library, or FALSE if the library isn't installed.
  */
 function chosen_get_chosen_path() {
