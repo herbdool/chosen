@@ -109,7 +109,11 @@ function chosen_library() {
 
   // Only add the Chosen CSS if it is not disabled for the active theme.
   if (!in_array($theme, $css_disabled_themes, TRUE)) {
-    $info['chosen']['css'] = array($library_path . '/chosen.css' => array());
+    $css = $library_path . '/chosen.css';
+    if (!file_exists($css)) {
+      $css = $library_path . '/chosen.min.css';
+    }
+    $info['chosen']['css'] = array($css => array());
   }
 
   // All the settings that are actually passed through into the chosen()
