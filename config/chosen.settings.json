@@ -1,0 +1,18 @@
+{
+    "_config_name": "chosen.settings",
+    "_module": "chosen",
+    "minimum_single": "20",
+    "minimum_multiple": "0",
+    "minimum_width": "300",
+    "search_contains": 0,
+    "jquery_selector": "select:visible",
+    "placeholder_text_multiple": "Choose some options",
+    "placeholder_text_single": "Choose an option",
+    "no_results_text": "No results match",
+    "disabled_themes": [],
+    "disable_search": 0,
+    "disable_search_threshold": 0,
+    "allow_single_deselect": 0,
+    "include": "2"
+
+}
