@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Chosen administration pages.
@@ -12,7 +11,7 @@ function chosen_admin_settings($form, &$form_state) {
 
   $chosen_path = chosen_get_chosen_path();
   if (!$chosen_path) {
-    drupal_set_message(t('The library could not be detected. You need to download the <a href="@chosen-js-file">Chosen JavaScript file</a> and extract the entire contents of the archive into the %path directory on your server.',
+    backdrop_set_message(t('The library could not be detected. You need to download the <a href="@chosen-js-file">Chosen JavaScript file</a> and extract the entire contents of the archive into the %path directory on your server.',
       array(
         '@chosen-js-file' => CHOSEN_WEBSITE_URL,
         '%path' => 'sites/all/libraries',
@@ -24,7 +23,7 @@ function chosen_admin_settings($form, &$form_state) {
   $form['chosen_minimum_single'] = array(
     '#type' => 'select',
     '#title' => t('Minimum number of options for single select'),
-    '#options' => array_merge(array('0' => t('Always apply')), drupal_map_assoc(range(1, 25))),
+    '#options' => array_merge(array('0' => t('Always apply')), backdrop_map_assoc(range(1, 25))),
     '#default_value' => variable_get('chosen_minimum_single', 20),
     '#description' => t('The minimum number of options to apply Chosen for single select fields. Example : choosing 10 will only apply Chosen if the number of options is greater or equal to 10.'),
   );
@@ -32,7 +31,7 @@ function chosen_admin_settings($form, &$form_state) {
   $form['chosen_minimum_multiple'] = array(
     '#type' => 'select',
     '#title' => t('Minimum number of options for multi select'),
-    '#options' => array_merge(array('0' => t('Always apply')), drupal_map_assoc(range(1, 25))),
+    '#options' => array_merge(array('0' => t('Always apply')), backdrop_map_assoc(range(1, 25))),
     '#default_value' => variable_get('chosen_minimum_multiple', 20),
     '#description' => t('The minimum number of options to apply Chosen for multi select fields. Example : choosing 10 will only apply Chosen if the number of options is greater or equal to 10.'),
   );
@@ -40,7 +39,7 @@ function chosen_admin_settings($form, &$form_state) {
   $form['chosen_disable_search_threshold'] = array(
     '#type' => 'select',
     '#title' => t('Minimum number to show Search on Single Select'),
-    '#options' => array_merge(array('0' => t('Never apply')), drupal_map_assoc(range(1, 25))),
+    '#options' => array_merge(array('0' => t('Never apply')), backdrop_map_assoc(range(1, 25))),
     '#default_value' => variable_get('chosen_disable_search_threshold', 0),
     '#description' => t('The minimum number of options to apply Chosen search box. Example : choosing 10 will only apply Chosen search if the number of options is greater or equal to 10.'),
   );

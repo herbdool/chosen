@@ -3,7 +3,7 @@
  * Attaches behaviors for the Chosen module.
  */
 
-(function($, Drupal) {
+(function($, Backdrop) {
   'use strict';
 
   // Update Chosen elements when state has changed.
@@ -12,7 +12,7 @@
     $(e.target).trigger('chosen:updated');
   });
 
-  Drupal.behaviors.chosen = {
+  Backdrop.behaviors.chosen = {
 
     settings: {
 
@@ -40,7 +40,7 @@
       optedInSelector: 'select.chosen-enable, select.chosen-widget',
 
       /**
-       * The default selector, can be overridden by Drupal.settings.
+       * The default selector, can be overridden by Backdrop.settings.
        *
        * @type {string}
        */
@@ -48,7 +48,7 @@
     },
 
     /**
-     * Drupal attach behavior.
+     * Backdrop attach behavior.
      */
     attach: function(context, settings) {
       this.settings = this.getSettings(settings);
@@ -148,15 +148,15 @@
     },
 
     /**
-     * Retrieves the settings passed from Drupal.
+     * Retrieves the settings passed from Backdrop.
      *
      * @param {Object} [settings]
-     *   Passed Drupal settings object, if any.
+     *   Passed Backdrop settings object, if any.
      */
     getSettings: function (settings) {
-      return $.extend(true, {}, this.settings, settings && settings.chosen || Drupal.settings && Drupal.settings.chosen);
+      return $.extend(true, {}, this.settings, settings && settings.chosen || Backdrop.settings && Backdrop.settings.chosen);
     }
 
   };
 
-})(jQuery, Drupal);
+})(jQuery, Backdrop);

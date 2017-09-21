@@ -1,33 +1,15 @@
 <?php
-
 /**
  * @file
  * General functions and hook implementations.
- *
- * @see http://harvesthq.github.com/chosen/
  */
 
 /**
  * Define chosen library url.
  */
-define('CHOSEN_WEBSITE_URL', 'http://harvesthq.github.io/chosen');
 define('CHOSEN_INCLUDE_ADMIN', 0);
 define('CHOSEN_INCLUDE_NO_ADMIN', 1);
 define('CHOSEN_INCLUDE_EVERYWHERE', 2);
-
-/**
- * Implements hook_help().
- */
-function chosen_help($path, $arg) {
-  switch ($path) {
-    case 'admin/help#chosen':
-      $output = '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Chosen uses the Chosen jQuery plugin to make your < select > elements more user-friendly.') . '</p>';
-      $output .= '<h3>' . t('Usage') . '</h3>';
-      $output .= '<p>' . t('Configure at: <a href="@structure_types">admin/config/user-interface/chosen</a>', array('@structure_types' => url('admin/config/user-interface/chosen'))) . '</p>';
-      return $output;
-  }
-}
 
 /**
  * Implements hook_menu().
@@ -38,7 +20,7 @@ function chosen_menu() {
   $items['admin/config/user-interface/chosen'] = array(
     'title' => 'Chosen',
     'description' => 'Configuration for Chosen plugin',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('chosen_admin_settings'),
     'access arguments' => array('administer site configuration'),
     'file' => 'chosen.admin.inc',
@@ -79,7 +61,6 @@ function chosen_form_field_ui_field_edit_form_alter(&$form, $form_state) {
         1 => t('Apply'),
       ),
       '#default_value' => $form['#instance']['widget']['settings']['apply_chosen'],
-      '#disabled' => !chosen_get_chosen_path(),
       '#empty_option' => t('No preference'),
       '#empty_value' => '',
       '#chosen' => FALSE,
@@ -105,15 +86,15 @@ function chosen_field_widget_form_alter(&$element, &$form_state, $context) {
 /**
  * Implements hook_library().
  */
-function chosen_library() {
+function chosen_library_info() {
   global $theme;
 
   $library_path = chosen_get_chosen_path();
 
   $info['chosen'] = array(
     'title' => 'Chosen',
-    'website' => CHOSEN_WEBSITE_URL,
-    'version' => '1.1.0',
+    'website' => 'http://harvesthq.github.io/chosen',
+    'version' => '1.8.2',
     'js' => array(
       $library_path . '/chosen.jquery.min.js' => array(),
     ),
@@ -143,13 +124,13 @@ function chosen_library() {
     'inherit_select_classes' => TRUE,
   );
 
-  $module_path = drupal_get_path('module', 'chosen');
-  $info['drupal.chosen'] = array(
-    'title' => 'Drupal Chosen integration',
-    'website' => 'https://drupal.org/project/chosen',
-    'version' => '1.1.0',
+  $module_path = backdrop_get_path('module', 'chosen');
+  $info['backdrop.chosen'] = array(
+    'title' => 'Backdrop Chosen integration',
+    'website' => 'https://backdropcms.org/project/chosen',
+    'version' => '2.1.x',
     'js' => array(
-      $module_path . '/chosen.js' => array(
+      $module_path . '/js/chosen.js' => array(
         'group' => JS_DEFAULT,
         'weight' => 100,
       ),
@@ -167,7 +148,7 @@ function chosen_library() {
       ),
     ),
     'css' => array(
-      $module_path . '/css/chosen-drupal.css' => array(),
+      $module_path . '/css/chosen-backdrop.css' => array(),
     ),
     'dependencies' => array(
       array('system', 'jquery.once'),
@@ -223,9 +204,8 @@ function chosen_pre_render_select($element) {
       // Element has opted-out of Chosen. Do not add the library now.
       return $element;
     }
-    elseif (array_intersect($element['#attributes']['class'], array('chosen-enable', 'chosen-widget'))) {
+    elseif (array_intersect($element['#attributes']['class'], array('chosen-enable'))) {
       // Element has opted-in for Chosen, ensure the library gets added.
-      // @todo Remove support for the deprecated chosen-widget class.
     }
   }
   else {
@@ -248,7 +228,7 @@ function chosen_pre_render_select($element) {
     $element['#attributes']['class'][] = 'chosen-rtl';
   }
 
-  $element['#attached']['library'][] = array('chosen', 'drupal.chosen');
+  $element['#attached']['library'][] = array('chosen', 'backdrop.chosen');
   return $element;
 }
 
@@ -297,33 +277,10 @@ function chosen_element_apply_property_recursive(array &$element, $chosen_value 
 /**
  * Get the location of the chosen library.
  *
- * @return mixed
- *   The location of the library, or FALSE if the library isn't installed.
+ * @return string
+ *   The location of the library.
  */
 function chosen_get_chosen_path() {
-  if (function_exists('libraries_get_path')) {
-    return libraries_get_path('chosen');
-  }
-
-  // The following logic is taken from libraries_get_libraries()
-  $searchdir = array();
-
-  // Similar to 'modules' and 'themes' directories inside an installation
-  // profile, installation profiles may want to place libraries into a
-  // 'libraries' directory.
-  $searchdir[] = 'profiles/' . drupal_get_profile() . '/libraries';
-
-  // Always search sites/all/libraries.
-  $searchdir[] = 'sites/all/libraries';
-
-  // Also search sites/<domain>/*.
-  $searchdir[] = conf_path() . '/libraries';
-
-  foreach ($searchdir as $dir) {
-    if (file_exists($dir . '/chosen/chosen.jquery.min.js')) {
-      return $dir . '/chosen';
-    }
-  }
-
-  return FALSE;
+  $path = backdrop_get_path('module', 'chosen') . '/libraries/chosen';
+  return $path;
 }

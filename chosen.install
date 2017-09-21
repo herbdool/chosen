@@ -1,42 +1,8 @@
 <?php
-
 /**
  * @file
  * Installation and uninstallation functions.
  */
-
-/**
- * Implements hook_requirements().
- */
-function chosen_requirements($phase) {
-  $requirements = array();
-  module_load_include('module', 'chosen');
-  $t = get_t();
-  $chosen_path = chosen_get_chosen_path();
-  switch ($phase) {
-    case 'runtime':
-      if (!$chosen_path) {
-        $requirements['chosen_js'] = array(
-          'title' => $t('Chosen JavaScript file'),
-          'severity' => REQUIREMENT_ERROR,
-          'description' => $t('You need to download the <a href="@chosen-js-file">Chosen JavaScript file</a> and extract the entire contents of the archive into the %path directory on your server.', array(
-            '@chosen-js-file' => CHOSEN_WEBSITE_URL,
-            '%path' => 'sites/all/libraries'
-          )),
-          'value' => $t('Not Installed'),
-        );
-      }
-      else {
-        $requirements['chosen_js'] = array(
-          'title' => $t('Chosen JavaScript file'),
-          'severity' => REQUIREMENT_OK,
-          'value' => $t('Installed'),
-        );
-      }
-      break;
-  }
-  return $requirements;
-}
 
 /**
  * Implements hook_uninstall().

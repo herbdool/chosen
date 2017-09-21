@@ -1,5 +1,6 @@
+type = module
 name = Chosen
-description = Makes select elements more user-friendly using <a href="http://harvesthq.github.com/chosen/">Chosen</a>.
+description = Makes select elements more user-friendly with the Chosen jQuery plugin.
 package = User interface
 configure = admin/config/user-interface/chosen
-core = 7.x
+backdrop = 1.x
