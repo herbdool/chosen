@@ -12,7 +12,7 @@ function chosen_admin_settings($form, &$form_state) {
 
   $form['#config'] = 'chosen.settings';
 
-  $form['chosen_minimum_single'] = array(
+  $form['minimum_single'] = array(
     '#type' => 'select',
     '#title' => t('Minimum number of options for single select'),
     '#options' => array_merge(array('0' => t('Always apply')), backdrop_map_assoc(range(1, 25))),
@@ -20,7 +20,7 @@ function chosen_admin_settings($form, &$form_state) {
     '#description' => t('The minimum number of options to apply Chosen for single select fields. Example : choosing 10 will only apply Chosen if the number of options is greater or equal to 10.'),
   );
 
-  $form['chosen_minimum_multiple'] = array(
+  $form['minimum_multiple'] = array(
     '#type' => 'select',
     '#title' => t('Minimum number of options for multi select'),
     '#options' => array_merge(array('0' => t('Always apply')), backdrop_map_assoc(range(1, 25))),
@@ -28,7 +28,7 @@ function chosen_admin_settings($form, &$form_state) {
     '#description' => t('The minimum number of options to apply Chosen for multi select fields. Example : choosing 10 will only apply Chosen if the number of options is greater or equal to 10.'),
   );
 
-  $form['chosen_disable_search_threshold'] = array(
+  $form['disable_search_threshold'] = array(
     '#type' => 'select',
     '#title' => t('Minimum number to show Search on Single Select'),
     '#options' => array_merge(array('0' => t('Never apply')), backdrop_map_assoc(range(1, 25))),
@@ -36,7 +36,7 @@ function chosen_admin_settings($form, &$form_state) {
     '#description' => t('The minimum number of options to apply Chosen search box. Example : choosing 10 will only apply Chosen search if the number of options is greater or equal to 10.'),
   );
 
-  $form['chosen_minimum_width'] = array(
+  $form['minimum_width'] = array(
     '#type' => 'number',
     '#title' => t('Minimum width of widget'),
     '#field_suffix' => 'px',
@@ -44,7 +44,7 @@ function chosen_admin_settings($form, &$form_state) {
     '#description' => t('The minimum width of the Chosen widget. Leave blank to have chosen determine this.'),
   );
 
-  $form['chosen_jquery_selector'] = array(
+  $form['jquery_selector'] = array(
     '#type' => 'textarea',
     '#title' => t('Apply Chosen to the following elements'),
     '#description' => t('A comma-separated list of jQuery selectors to apply Chosen to, such as <code>select#edit-operation, select#edit-type</code> or <code>.chosen-select</code>. Defaults to <code>select</code> to apply Chosen to all <code>&lt;select&gt;</code> elements.'),
@@ -55,14 +55,14 @@ function chosen_admin_settings($form, &$form_state) {
     '#type' => 'fieldset',
     '#title' => t('Chosen general options'),
   );
-  $form['options']['chosen_search_contains'] = array(
+  $form['options']['search_contains'] = array(
     '#type' => 'checkbox',
     '#title' => t('Search also in the middle of words'),
     '#default_value' => $config->get('search_contains'),
     '#description' => t('Per default chosen searches only at beginning of words. Enable this option will also find results in the middle of words.
       Example: Search for <em>land</em> will also find <code>Switzer<strong>land</strong></code>.'),
   );
-  $form['options']['chosen_disable_search'] = array(
+  $form['options']['disable_search'] = array(
     '#type' => 'checkbox',
     '#title' => t('Disable search box'),
     '#default_value' => $config->get('disable_search'),
@@ -74,7 +74,7 @@ function chosen_admin_settings($form, &$form_state) {
     '#title' => t('Chosen per theme options'),
   );
 
-  $form['theme_options']['chosen_disabled_themes'] = array(
+  $form['theme_options']['disabled_themes'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Disable the default Chosen theme for the following themes'),
     '#options' => _chosen_enabled_themes_options(),
@@ -82,7 +82,7 @@ function chosen_admin_settings($form, &$form_state) {
     '#description' => t('Enable or disable the default Chosen CSS file. Select a theme if it contains custom styles for Chosen replacements.'),
   );
 
-  $form['options']['chosen_include'] = array(
+  $form['options']['include'] = array(
     '#type' => 'radios',
     '#title' => t('Use chosen for admin pages and/or front end pages'),
     '#options' => array(
@@ -93,7 +93,7 @@ function chosen_admin_settings($form, &$form_state) {
     '#default_value' => $config->get('include'),
   );
 
-  $form['options']['chosen_allow_single_deselect'] = array(
+  $form['options']['allow_single_deselect'] = array(
     '#type' => 'checkbox',
     '#title' => t('Allow deselect on single selects'),
     '#default_value' => $config->get('allow_single_deselect'),
@@ -104,19 +104,19 @@ function chosen_admin_settings($form, &$form_state) {
     '#type' => 'fieldset',
     '#title' => t('Chosen strings'),
   );
-  $form['strings']['chosen_placeholder_text_multiple'] = array(
+  $form['strings']['placeholder_text_multiple'] = array(
     '#type' => 'textfield',
     '#title' => t('Placeholder text of multiple selects'),
     '#required' => TRUE,
     '#default_value' => $config->get('placeholder_text_multiple'),
   );
-  $form['strings']['chosen_placeholder_text_single'] = array(
+  $form['strings']['placeholder_text_single'] = array(
     '#type' => 'textfield',
     '#title' => t('Placeholder text of single selects'),
     '#required' => TRUE,
     '#default_value' => $config->get('placeholder_text_single'),
   );
-  $form['strings']['chosen_no_results_text'] = array(
+  $form['strings']['no_results_text'] = array(
     '#type' => 'textfield',
     '#title' => t('No results text'),
     '#required' => TRUE,
